@@ -1,11 +1,12 @@
 import datetime
 from django.db import models
+from django.utils import timezone
 
 class Record(models.Model):
     """Record"""
     date = models.DateTimeField(
         '日付', max_length=255,
-        default=datetime.datetime.today().replace(hour=0, minute=0, second=0, microsecond=0),
+        default=datetime.datetime.today,
         null=False
     )
     comment = models.TextField('コメント', blank=True, null=True)
@@ -27,8 +28,8 @@ class Activity(models.Model):
     record = models.ForeignKey(Record, verbose_name='活動日', related_name='activities', on_delete=models.CASCADE)
     activity_type = models.ForeignKey(ActivityType, verbose_name='種別', related_name='activities', on_delete=models.SET_NULL, null=True)
     name = models.CharField('内容', max_length=255, null=False)
-    start = models.DateTimeField('開始', default=datetime.datetime.now(), null=False)
-    end = models.DateTimeField('終了', default=datetime.datetime.now(), null=False)
+    start = models.DateTimeField('開始', default=timezone.now, null=False)
+    end = models.DateTimeField('終了', default=timezone.now, null=False)
 
     def __str__(self):
         act_type = self.activity_type
