@@ -2,6 +2,7 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+
 class Record(models.Model):
     """Record"""
     date = models.DateTimeField(
@@ -15,6 +16,7 @@ class Record(models.Model):
     def __str__(self):
         return self.date.isoformat()
 
+
 class ActivityType(models.Model):
     """ActivityType"""
     name = models.CharField('種別', max_length=50, null=False)
@@ -22,6 +24,7 @@ class ActivityType(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Activity(models.Model):
     """Activity"""
