@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 
 from cms.models import Record  # , ActivityType, Activity
 from cms.forms import RecordForm
@@ -32,4 +31,7 @@ def edit_record(request, record_id=None):
 
 def del_record(request, record_id):
     """活動記録の削除"""
-    return HttpResponse('活動記録の削除')
+    # return HttpResponse('活動記録の削除')
+    record = get_object_or_404(Record, pk=record_id)
+    record.delete()
+    return redirect('cms:life_logs')
