@@ -6,8 +6,16 @@ name = "pypi"
 [packages]
 django = "*"
 psycopg2-binary = "*"
+django-bootstrap4 = "*"
+django-bootstrap-datepicker-plus = "*"
 
 [dev-packages]
+flake8 = "*"
+pytest-django = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+test = "pytest -v"

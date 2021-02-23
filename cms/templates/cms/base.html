@@ -1,0 +1,27 @@
+{# Set bootstrap4 #}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{{ form.media }} <!-- INFO: It is necessary for enabling bootstrap_datepicker_plus working. -->
+
+{% load i18n static %}
+
+<!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
+
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block extra_css %}
+    {% endblock %}
+    <title>{% block title %}My books{% endblock %}</title>
+  </head>
+  <body>
+    <div class="container">
+      {% block content %}
+        {{ content }}
+      {% endblock %}
+    </div>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

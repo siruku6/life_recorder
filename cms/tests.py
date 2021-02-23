@@ -1,3 +1,13 @@
+from django.urls import resolve, Resolver404
 from django.test import TestCase
+import pytest
 
-# Create your tests here.
+
+class HomePageTest(TestCase):
+    def test_not_exist_url(self):
+        with pytest.raises(Resolver404):
+            resolve('/cms/hoge/')
+
+    def test_exist_url(self):
+        result = resolve('/cms/logs/')
+        assert result.url_name == 'life_logs'
