@@ -9,6 +9,7 @@ psycopg2-binary = "*"
 django-bootstrap4 = "*"
 django-bootstrap-datepicker-plus = "*"
 django-environ = "*"
+gunicorn = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -20,4 +21,5 @@ python_version = "3.8"
 
 [scripts]
 server = "python manage.py runserver"
+# server = "gunicorn life_recorder.wsgi --preload --log-level info"
 test = "pytest -vv"
