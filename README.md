@@ -1,6 +1,7 @@
+[![CircleCI Status](https://circleci.com/gh/siruku6/life_recorder.svg?style=svg)](https://app.circleci.com/pipelines/github/siruku6/life_recorder?branch=master)
+
 # life_recorder
 display activity log
-
 
 # Requirement
 
