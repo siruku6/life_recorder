@@ -1,21 +1,49 @@
 version: 2.1
-jobs:
-  build:
+
+executors:
+  test_executor:
     docker:
       - image: circleci/python:3.8.6
         environment:
-          PIPENV_VENV_IN_PROJECT: true
           DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
-      - image: circleci/postgres:9.6.2
+          DB_USER: root
+          DB_PASSWORD: ""
+          PIPENV_VENV_IN_PROJECT: true
+          SECRET_KEY: 8qic+elwpfebo&-)op_#96f_($q(2rw8s9tt!++ou6$934qs-f
+      - image: circleci/postgres:11.2
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
+          POSTGRES_PASSWORD: ""
+
+commands:
+  restore_pipenv:
+    description: "read cache of the 'pipenv install' result"
+    steps:
+      - restore_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+
+  save_pipenv_cache:
+    description: "save 'pipenv install' result into cache"
+    steps:
+      - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ".venv"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.8/site-packages"
+
+jobs:
+  build:
+    executor: test_executor
     steps:
       - checkout
+      - restore_pipenv
       - run:
           command: |
             sudo pip install pipenv
             pipenv install --dev
+      - save_pipenv_cache
       - run:
           command: |
             pipenv run test
