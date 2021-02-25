@@ -8,6 +8,7 @@ django = "*"
 psycopg2-binary = "*"
 django-bootstrap4 = "*"
 django-bootstrap-datepicker-plus = "*"
+django-environ = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -18,4 +19,5 @@ pytest = "*"
 python_version = "3.8"
 
 [scripts]
+server = "python manage.py runserver"
 test = "pytest -v"
