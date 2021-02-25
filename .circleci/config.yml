@@ -46,7 +46,8 @@ jobs:
       - save_pipenv_cache
       - run:
           command: |
-            pipenv run test
+            mkdir test-results
+            pytest -vv --junitxml=test-results/junit.xml
       # upload and store test result into circleci
       - store_test_results:
           path: test-results
