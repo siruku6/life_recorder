@@ -21,7 +21,7 @@ commands:
     description: "read cache of the 'pipenv install' result"
     steps:
       - restore_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}-{{ .Environment.CACHE_VERSION }}
 
   save_pipenv_cache:
     description: "save 'pipenv install' result into cache"
@@ -45,7 +45,7 @@ jobs:
       - run:
           command: |
             mkdir test-results
-            pytest -vv --junitxml=test-results/junit.xml
+            pipenv run pytest -v --junitxml=test-results/junit.xml
       # upload and store test result into circleci
       - store_test_results:
           path: test-results
