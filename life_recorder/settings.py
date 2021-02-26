@@ -91,10 +91,7 @@ WSGI_APPLICATION = 'life_recorder.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if env('HEROKU'):
-    db_from_env = dj_database_url.config()
-    DATABASES = {'default': db_from_env}
-else:
+if not env('HEROKU'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -149,6 +146,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 if env('HEROKU'):
+    db_from_env = dj_database_url.config()
+    DATABASES = {'default': db_from_env}
     django_heroku.settings(locals())
