@@ -13,8 +13,8 @@ display activity log
 Copy from .env.example to .env, then rewrite it.
 
 ```bash
-$ cp ./life_recorder/.env.example ./life_recorder/.env
-$ vim ./life_recorder/.env
+$ cp .env.example .env
+$ vim .env
 ```
 |No|Name       |Value Example|Note                                   |
 |:-|:----------|:------------|:--------------------------------------|
