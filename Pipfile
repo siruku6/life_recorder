@@ -10,6 +10,8 @@ django-bootstrap4 = "*"
 django-bootstrap-datepicker-plus = "*"
 django-environ = "*"
 gunicorn = "*"
+django-heroku = "*"
+whitenoise = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -20,6 +22,7 @@ pytest = "*"
 python_version = "3.8"
 
 [scripts]
+check = "gunicorn --check-config life_recorder.wsgi"
 server = "python manage.py runserver"
-# server = "gunicorn life_recorder.wsgi --preload --log-level info"
+pro = "gunicorn life_recorder.wsgi --preload"
 test = "pytest -vv"

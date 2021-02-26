@@ -17,10 +17,17 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(
-    DEBUG=(bool, False)
+    DEBUG=(bool, False),
+    HEROKU=(bool, False)
 )
 # env_file = str(BASE_DIR.path('.env'))
-env.read_env()
+
+# INFO: read heroku settings
+if env('HEROKU'):
+    import dj_database_url
+    import django_heroku
+else:
+    env.read_env('.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -31,7 +38,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -50,6 +57,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # INFO: For serving static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,19 +91,23 @@ WSGI_APPLICATION = 'life_recorder.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'life_recorder',
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '',
-        'TEST': {
-            'NAME': 'life_record_test',
-        },
+if env('HEROKU'):
+    db_from_env = dj_database_url.config()
+    DATABASES = {'default': db_from_env}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'life_recorder',
+            'USER': env('DB_USER'),
+            'PASSWORD': env('DB_PASSWORD'),
+            'HOST': 'localhost',
+            'PORT': '',
+            'TEST': {
+                'NAME': 'life_record_test',
+            },
+        }
     }
-}
 
 
 # Password validation
@@ -136,3 +149,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+if env('HEROKU'):
+    django_heroku.settings(locals())
