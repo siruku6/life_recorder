@@ -66,6 +66,7 @@ jobs:
           command: heroku maintenance:on --app $HEROKU_APP
       - run:
           name: heroku deploy
+          # INFO git push remote_url current_branch:main
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git $CIRCLE_BRANCH:main
       - run:
@@ -80,6 +81,6 @@ workflows:
       - deploy-heroku:
           requires:
             - build
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
