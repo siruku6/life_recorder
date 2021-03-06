@@ -2,7 +2,7 @@
 {% block title %}活動一覧{% endblock title %}
 
 {% block content %}
-  <h4 class="mt-4 border-bottom">活動一覧 <small class="text-muted ml-3">({{ record.date }})</small></h4>
+  <h4 class="mt-4 border-bottom">活動一覧 <small class="text-muted ml-3">({{ record.date|date:"Y-m-j" }})</small></h4>
   <a href="{% url 'cms:create_activity' record_id=record.id %}" class="btn btn-primary btn-sm my-3">追加</a>
   <table class="table table-striped table-bordered table-sm">
     <thead>
@@ -21,8 +21,8 @@
         <th scope="row">{{ activity.id }}</th>
         <td>{{ activity.activity_type }}</td>
         <td>{{ activity.name }}</td>
-        <td>{{ activity.start }}</td>
-        <td>{{ activity.end }}</td>
+        <td>{{ activity.start|date:"Y-m-j H:i T" }}</td>
+        <td>{{ activity.end|date:"Y-m-j H:i T" }}</td>
         <td>
           <a href="{% url 'cms:edit_activity' record_id=record.id activity_id=activity.id %}" class="btn btn-outline-primary btn-sm">修正</a>
           <a href="{% url 'cms:destroy_activity' record_id=record.id activity_id=activity.id %}" class="btn btn-outline-danger btn-sm">削除</a>

@@ -18,7 +18,7 @@
       {% for record in records %}
       <tr>
         <th scope="row">{{ record.id }}</th>
-        <td>{{ record.date }}</td>
+        <td>{{ record.date|date:"Y-m-j" }}</td>
         <td>{{ record.comment }}</td>
         <!-- <td>{{ book.page }}</td> -->
         <td>

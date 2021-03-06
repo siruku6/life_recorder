@@ -56,7 +56,11 @@ class Activities(ListView):
         activities = record.activities.all().order_by('id')
         self.object_list = activities
 
-        context = self.get_context_data(object_list=self.object_list, record=record)
+        context = self.get_context_data(
+            object_list=self.object_list, record=record
+        )
+
+        # import pdb; pdb.set_trace()
         return self.render_to_response(context)
 
 
