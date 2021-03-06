@@ -24,6 +24,7 @@
         <td>
           <a href="{% url 'cms:edit_record' record_id=record.id %}" class="btn btn-outline-primary btn-sm">修正</a>
           <a href="{% url 'cms:destroy_record' record_id=record.id %}" class="btn btn-outline-danger btn-sm">削除</a>
+          <a href="{% url 'cms:activities' record_id=record.id %}" class="btn btn-outline-info btn-sm">活動内容一覧</a>
         </td>
       </tr>
       {% endfor %}
