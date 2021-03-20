@@ -48,7 +48,7 @@ def del_record(request, record_id):
 class Activities(ListView):
     """活動内容の一覧"""
     context_object_name = 'activities'
-    template_name = 'cms/activities.html'
+    template_name = 'cms/activities.html.haml'
     paginate_by = 2
 
     def get(self, request, *args, **kwargs):
