@@ -1,0 +1,27 @@
+- extends "cms/base.html"
+- block title
+  記録一覧
+
+- block content
+  %h4.mt-4.border-bottom 記録一覧
+  %a.btn.btn-primary.btn-sm.my-3{href: "{% url 'cms:create_record' %}"} 追加
+  %table.table.table-striped.table-bordered.table-sm
+    %thead
+      %tr
+        %th(scope="col") ID
+        %th(scope="col") 日付
+        %th(scope="col") コメント
+        %th(scope="col") 操作
+    %tbody
+      - for record in records
+        %tr
+          %th(scope="row")= record.id
+          %td= record.date|date:"Y-m-j"
+          %td= record.comment
+          %td
+            %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:edit_record' record_id=record.id %}"}
+              修正
+            %a.btn.btn-outline-danger.btn-sm{href: "{% url 'cms:destroy_record' record_id=record.id %}"}
+              削除
+            %a.btn.btn-outline-info.btn-sm{href: "{% url 'cms:activities' record_id=record.id %}"}
+              活動内容一覧

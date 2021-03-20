@@ -46,6 +46,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'bootstrap4',
     'bootstrap_datepicker_plus',
+    # 'hamlpy', # なくても動く
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,11 +70,18 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'life_recorder.urls'
 
+
+TEMPLATES_LOADERS = (
+    'hamlpy.template.loaders.HamlPyFilesystemLoader',
+    'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
+)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        # INFO: loadersをセットしたときは、APP_DIRSを設定してはいけない模様
+        # django.core.exceptions.ImproperlyConfigured: app_dirs must not be set when loaders is defined.
+        # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -81,9 +89,14 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'loaders': TEMPLATES_LOADERS,
         },
     },
 ]
+if env('HEROKU'):
+    TEMPLATES['OPTIONS']['loaders'] = \
+        ('django.template.loaders.cached.Loader', TEMPLATES_LOADERS),
+# import pdb; pdb.set_trace()
 
 WSGI_APPLICATION = 'life_recorder.wsgi.application'
 
@@ -134,11 +147,8 @@ LANGUAGE_CODE = 'en-us'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Tokyo'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 

@@ -12,6 +12,7 @@ django-environ = "*"
 gunicorn = "*"
 django-heroku = "*"
 whitenoise = "*"
+django-hamlpy = "*"
 
 [dev-packages]
 flake8 = "*"

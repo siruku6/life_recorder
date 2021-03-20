@@ -12,7 +12,7 @@ from cms.forms import RecordForm, ActivityForm
 def life_logs(request):
     """活動日一覧"""
     records = Record.objects.all().order_by('id')
-    return render(request, 'cms/logs.html', {'records': records})
+    return render(request, 'cms/logs.html.haml', {'records': records})
 
 
 def edit_record(request, record_id=None):
