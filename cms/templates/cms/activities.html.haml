@@ -31,66 +31,8 @@
             %a.btn.btn-outline-danger.btn-sm.del_confirm{href: "{% url 'cms:destroy_activity' record_id=record.id activity_id=activity.id %}", 'data-toggle': "modal", 'data-target': "#deleteModal", 'data-pk': "{{ activity.id }}"}
               削除
 
-  -# 削除を確認するモーダル ダイアログ
-  %div#deleteModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true")
-    %div.modal-dialog(role="document")
-      %div.modal-content
-        %div.modal-header
-          %h5#deleteModalLabel.modal-title 確認
-          %button.close(type="button" data-dismiss="modal" aria-label="Close")
-            %span(aria-hidden="true") &times;
-        %div.modal-body
-          %p
-            ID:
-            %span#del_pk
-            を削除しますか？
-        %div.modal-footer
-          %a#del_url.btn.btn-primary{href: "#"} OK
-          %button.btn.btn-secondary{type: "button", 'data-dismiss': "modal"} Cancel
-
+  - include 'partials/confirmation_modal.html.haml'
   - if is_paginated
-    %nav{'aria-label': "Page navigation"}
-      %ul.pagination
-        - if page_obj.has_previous
-          %li.page-item
-            %a.page-link{href: "?page={{ page_obj.previous_page_number }}", 'aria-label': "Previous"}
-              %span(aria-hidden="true") &laquo;
-              %span.sr-only Previous
-        - else
-          %li.page-item.disabled
-            %a.page-link{href: "#", 'aria-label': "Previous"}
-              %span(aria-hidden="true") &laquo;
-              %span.sr-only Previous
-
-        - for linkpage in page_obj.paginator.page_range
-          - ifequal linkpage page_obj.number
-            %li.page-item.active
-              %a.page-link{href: "#"}= linkpage
-          - else
-            %li.page-item
-              %a.page-link{href: "?page={{ linkpage }}"}= linkpage
-
-        - if page_obj.has_next
-          %li.page-item
-            %a.page-link{href: "?page={{ page_obj.next_page_number }}", 'aria-label': "Next"}
-              %span(aria-hidden="true") &raquo;
-              %span.sr-only Next
-        - else
-          %li.page-item.disabled
-            %a.page-link{href: "#", 'aria-label': "Next"}
-              %span(aria-hidden="true") &raquo;
-              %span.sr-only Next
+    - include 'partials/pagination.html.haml'
 
   %a.btn.btn-outline-secondary.btn-sm{href: "{% url 'cms:life_logs' %}"} 戻る
-
-- block extra_js
-  %script
-    $(function() {
-      $('.del_confirm').on('click', function (e) {
-
-        console.log($(this).attr('href'));
-        console.log(e);
-        $('#del_pk').text($(this).data('pk'));
-        $('#del_url').attr('href', $(this).attr('href'));
-      });
-    });
