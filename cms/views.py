@@ -31,7 +31,7 @@ def edit_record(request, record_id=None):
     else:
         form = RecordForm(instance=record)
 
-    return render(request, 'cms/edit_record.html', dict(form=form, record_id=record_id))
+    return render(request, 'cms/edit_record.html.haml', dict(form=form, record_id=record_id))
 
 
 def del_record(request, record_id):
@@ -60,7 +60,6 @@ class Activities(ListView):
             object_list=self.object_list, record=record
         )
 
-        # import pdb; pdb.set_trace()
         return self.render_to_response(context)
 
 
@@ -84,7 +83,7 @@ def edit_activity(request, record_id, activity_id=None):
         form = ActivityForm(instance=activity)
 
     return render(
-        request, 'cms/edit_activity.html',
+        request, 'cms/edit_activity.html.haml',
         dict(form=form, record_id=record_id, activity_id=activity_id))
 
 
