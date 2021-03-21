@@ -1,0 +1,28 @@
+-# 削除を確認するモーダル ダイアログ
+%div#deleteModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true")
+  %div.modal-dialog(role="document")
+    %div.modal-content
+      %div.modal-header
+        %h5#deleteModalLabel.modal-title 確認
+        %button.close(type="button" data-dismiss="modal" aria-label="Close")
+          %span(aria-hidden="true") &times;
+      %div.modal-body
+        %p
+          ID:
+          %span#del_pk
+          を削除しますか？
+      %div.modal-footer
+        %a#del_url.btn.btn-primary{href: "#"} OK
+        %button.btn.btn-secondary{type: "button", 'data-dismiss': "modal"} Cancel
+
+- block extra_js
+  %script
+    $(function() {
+      $('.del_confirm').on('click', function (e) {
+
+        console.log($(this).attr('href'));
+        console.log(e);
+        $('#del_pk').text($(this).data('pk'));
+        $('#del_url').attr('href', $(this).attr('href'));
+      });
+    });

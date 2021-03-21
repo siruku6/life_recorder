@@ -12,7 +12,7 @@ from cms.forms import RecordForm, ActivityForm
 def life_logs(request):
     """活動日一覧"""
     records = Record.objects.all().order_by('id')
-    return render(request, 'cms/logs.html', {'records': records})
+    return render(request, 'cms/logs.html.haml', {'records': records})
 
 
 def edit_record(request, record_id=None):
@@ -31,7 +31,7 @@ def edit_record(request, record_id=None):
     else:
         form = RecordForm(instance=record)
 
-    return render(request, 'cms/edit_record.html', dict(form=form, record_id=record_id))
+    return render(request, 'cms/edit_record.html.haml', dict(form=form, record_id=record_id))
 
 
 def del_record(request, record_id):
@@ -48,7 +48,7 @@ def del_record(request, record_id):
 class Activities(ListView):
     """活動内容の一覧"""
     context_object_name = 'activities'
-    template_name = 'cms/activities.html'
+    template_name = 'cms/activities.html.haml'
     paginate_by = 2
 
     def get(self, request, *args, **kwargs):
@@ -60,7 +60,6 @@ class Activities(ListView):
             object_list=self.object_list, record=record
         )
 
-        # import pdb; pdb.set_trace()
         return self.render_to_response(context)
 
 
@@ -84,7 +83,7 @@ def edit_activity(request, record_id, activity_id=None):
         form = ActivityForm(instance=activity)
 
     return render(
-        request, 'cms/edit_activity.html',
+        request, 'cms/edit_activity.html.haml',
         dict(form=form, record_id=record_id, activity_id=activity_id))
 
 

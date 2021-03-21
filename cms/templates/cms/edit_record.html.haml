@@ -1,0 +1,15 @@
+- extends "cms/base.html.haml"
+
+- block title
+  活動記録の編集
+
+- block content
+  %h4.mt-4.mb-5.border-bottom 活動記録の編集
+  - if record_id
+    %form{action: "{% url 'cms:edit_record' record_id=record_id %}", method: "post"}
+      - include 'partials/bootstrap_submit.html.haml'
+  - else
+    %form{action: "{% url 'cms:create_record' %}", method: "post"}
+      - include 'partials/bootstrap_submit.html.haml'
+
+  %a.btn.btn-outline-secondary.btn-sm{href: "{% url 'cms:life_logs' %}"} 戻る
