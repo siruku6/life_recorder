@@ -94,7 +94,7 @@ TEMPLATES = [
     },
 ]
 if env('HEROKU'):
-    TEMPLATES['OPTIONS']['loaders'] = \
+    TEMPLATES[0]['OPTIONS']['loaders'] = \
         ('django.template.loaders.cached.Loader', TEMPLATES_LOADERS),
 # import pdb; pdb.set_trace()
 
