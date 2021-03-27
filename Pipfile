@@ -6,8 +6,6 @@ name = "pypi"
 [packages]
 django = "*"
 psycopg2-binary = "*"
-django-bootstrap4 = "*"
-django-bootstrap-datepicker-plus = "*"
 django-environ = "*"
 gunicorn = "*"
 django-heroku = "*"
