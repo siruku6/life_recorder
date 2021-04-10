@@ -24,8 +24,8 @@ env = environ.Env(
 
 
 # INFO: read heroku settings
-ON_HEROKU = env('ENVIRONMENT') == 'HEROKU'
-if ON_HEROKU:
+VIRTUAL_ENVIRONMENT = env('ENVIRONMENT')
+if VIRTUAL_ENVIRONMENT == 'HEROKU':
     import dj_database_url
 else:
     env_file = str(BASE_DIR.path('.env'))
@@ -95,7 +95,7 @@ TEMPLATES = [
         },
     },
 ]
-if ON_HEROKU:
+if VIRTUAL_ENVIRONMENT == 'HEROKU':
     TEMPLATES[0]['OPTIONS']['loaders'] = \
         ('django.template.loaders.cached.Loader', TEMPLATES_LOADERS),
 # import pdb; pdb.set_trace()
@@ -107,7 +107,18 @@ WSGI_APPLICATION = 'life_recorder.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 
-if ON_HEROKU:
+if VIRTUAL_ENVIRONMENT == 'DOCKER':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': env('POSTGRES_PASSWORD'),
+            'HOST': 'postgres',
+            'PORT': 5432,
+        }
+    }
+elif VIRTUAL_ENVIRONMENT == 'HEROKU':
     db_from_env = dj_database_url.config()
     DATABASES = {
         'default': db_from_env
@@ -168,7 +179,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-if ON_HEROKU:
+if VIRTUAL_ENVIRONMENT == 'HEROKU':
     # INFO: This must be set at the bottom of settings.py
     # https://devcenter.heroku.com/ja/articles/django-app-configuration
     django_heroku.settings(locals())

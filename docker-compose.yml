@@ -1,0 +1,34 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    command: ./docker/web/cmd.sh
+    environment:
+      - TZ=Asia/Tokyo
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - .:/opt
+    ports:
+      - 8000:8000
+    depends_on:
+      - waitfordb
+      - postgres
+
+      # HACK: This container make web container to wait postgres container readied
+  waitfordb:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - postgres
+    command: postgres:5432
+
+  postgres:
+    image: postgres:12.2-alpine
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+
+volumes:
+  db:

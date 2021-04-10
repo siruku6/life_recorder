@@ -8,6 +8,7 @@ executors:
           DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
           DB_USER: root
           DB_PASSWORD: ""
+          ENVIRONMENT: "circleci"
           PIPENV_VENV_IN_PROJECT: true
           SECRET_KEY: 8qic+elwpfebo&-)op_#96f_($q(2rw8s9tt!++ou6$934qs-f
       - image: circleci/postgres:11.2
