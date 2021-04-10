@@ -5,33 +5,48 @@ display activity log
 
 # Requirement
 
-## 1. Middlewares
+## Middlewares
 
 - postgresql
 
-## 2. Environment Variables
-Copy from .env.example to .env, then rewrite it.
-
-```bash
-$ cp .env.example .env
-$ vim .env
-```
-|No|Name       |Value Example|Note                                   |
-|:-|:----------|:------------|:--------------------------------------|
-|1 |DEBUG      |True         |True => Display error detail on browser|
-|2 |SECRET_KEY |xxxxxx...    |It is for Django                       |
-|3 |DB_USER    |user         |It is username of your postgresql      |
-|4 |DB_PASSWORD|password     |It is password of your postgresql      |
-
-
 # Development
 
-```
-# Setup DB
-$ python manage.py migrate
-$ python manage.py createsuperuser
+## How to construct development environment?
+### With Docker
 
-# Run django server
-$ python manage.py runserver
-```
-Then, you can access `localhost:8000/cms/logs`, `localhost:8000/admin` !
+1. Execute following commands
+    ```bash
+    $ docker-compose build
+    $ docker-compose up -d
+    $ docker-compose exec web python manage.py createsuperuser
+    ```
+1. Then, you can access to
+    - `localhost:8000/admin`
+    - `localhost:8000/cms/logs`
+
+### With python on your OS
+1. Install and setup postgresql
+1. Prepare `.env`  
+Copy from .env.example to .env, then rewrite it.
+    ```bash
+    $ cp .env.example .env
+    $ vim .env
+    ```
+    |No|Name       |Value Example|Note                                   |
+    |:-|:----------|:------------|:--------------------------------------|
+    |1 |DEBUG      |True         |True => Display error detail on browser|
+    |2 |SECRET_KEY |xxxxxx...    |It is for Django                       |
+    |3 |DB_USER    |user         |It is username of your postgresql      |
+    |4 |DB_PASSWORD|password     |It is password of your postgresql      |
+1. Commands
+    ```
+    # Setup DB
+    $ python manage.py migrate
+    $ python manage.py createsuperuser
+
+    # Run django server
+    $ python manage.py runserver
+    ```
+1. Then, you can access to
+    - `localhost:8000/admin`
+    - `localhost:8000/cms/logs`

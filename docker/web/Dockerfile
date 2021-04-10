@@ -6,6 +6,8 @@ RUN apt update \
     # install packages for development
     && apt -y install --no-install-recommends \
            bash vim \
+           # For django-hamlpy
+           gcc musl-dev \
     # imageのサイズを小さくするためにキャッシュ削除
     && rm -rf /var/lib/apt/lists/* \
     && apt -y clean
@@ -16,5 +18,5 @@ EXPOSE 8000
 
 ARG workdir="opt"
 WORKDIR /${workdir}
-ADD docker/web/cmd.sh /
-CMD ["/cmd.sh"]
+ADD requirements.txt .
+RUN pip install -r requirements.txt
