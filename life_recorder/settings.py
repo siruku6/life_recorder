@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 import environ
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = environ.Path(__file__) - 2
@@ -26,9 +27,6 @@ env = environ.Env(
 ON_HEROKU = env('ENVIRONMENT') == 'HEROKU'
 if ON_HEROKU:
     import dj_database_url
-    import django_heroku
-
-    django_heroku.settings(locals())
 else:
     env_file = str(BASE_DIR.path('.env'))
     env.read_env(env_file)
@@ -168,3 +166,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+if ON_HEROKU:
+    # INFO: This must be set at the bottom of settings.py
+    # https://devcenter.heroku.com/ja/articles/django-app-configuration
+    django_heroku.settings(locals())
