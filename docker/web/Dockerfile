@@ -1,6 +1,5 @@
 FROM python:3.8.8
 
-# Preparation for SSH Connection
 RUN apt update \
     && apt upgrade -y \
     # install packages for development

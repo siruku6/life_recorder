@@ -16,7 +16,7 @@ services:
       - waitfordb
       - postgres
 
-      # HACK: This container make web container to wait postgres container readied
+  # HACK: This container make web container to wait postgres container readied
   waitfordb:
     image: dadarek/wait-for-dependencies
     depends_on:
