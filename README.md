@@ -16,6 +16,7 @@ display activity log
 
 1. Execute following commands
     ```bash
+    $ cp .env.example .env
     $ docker-compose build
     $ docker-compose up -d
     $ docker-compose exec web python manage.py createsuperuser
