@@ -1,0 +1,20 @@
+- extends "cms/base.html.haml"
+
+- block content
+  %h4 Activity Types
+
+  %table.table.table-sm.table-striped
+    %thead
+      %tr
+        %th id
+        %th name
+        %th{colspan: 2} color
+    %tbody
+      - for type in activity_types
+        %tr
+          %td= type.id
+          %td= type.name
+          %td= type.color
+          %td{ style: 'background-color: {{type.color}};' }
+
+  - include 'partials/btn_back.html.haml'

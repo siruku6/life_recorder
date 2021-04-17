@@ -3,11 +3,19 @@ from cms import views
 
 app_name = 'cms'
 urlpatterns = [
+    path('', views.index, name='index'),
+
     # 活動日
     path('logs/', views.life_logs, name='life_logs'),
     path('records/create/', views.edit_record, name='create_record'),
     path('records/<int:record_id>/edit/', views.edit_record, name='edit_record'),
     path('records/<int:record_id>/destroy/', views.del_record, name='destroy_record'),
+
+    # 活動種別
+    path('activity_types/', views.activity_types, name='activity_types'),
+    # path('activity_types/create/', views.edit_activity_types, name='create_activity_type'),
+    # path('activity_types/<int:id>/edit/', views.edit_activity_types, name='create_activity_type'),
+    # path('activity_types/<int:id>/destroy/', views.del_activity_types, name='destroy_activity_type'),
 
     # 活動内容
     path('records/<int:record_id>/activities/', views.Activities.as_view(), name='activities'),

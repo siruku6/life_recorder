@@ -2,8 +2,12 @@ import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 
-from cms.models import Record, Activity  # , ActivityType
+from cms.models import Record, ActivityType, Activity
 from cms.forms import RecordForm, ActivityForm
+
+
+def index(request):
+    return render(request, 'cms/index.html.haml')
 
 
 # -----------------------------------------------------------
@@ -40,6 +44,15 @@ def del_record(request, record_id):
     record = get_object_or_404(Record, pk=record_id)
     record.delete()
     return redirect('cms:life_logs')
+
+
+# -----------------------------------------------------------
+#                         Activity
+# -----------------------------------------------------------
+def activity_types(request):
+    """活動日一覧"""
+    types = ActivityType.objects.all().order_by('id')
+    return render(request, 'cms/activity_types.html.haml', {'activity_types': types})
 
 
 # -----------------------------------------------------------
