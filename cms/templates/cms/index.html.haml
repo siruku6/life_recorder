@@ -1,0 +1,28 @@
+- extends "cms/base.html.haml"
+- block title
+  Home
+
+- block content
+  %h4.mt-4.border-bottom Home
+  .row
+    .col-sm-4
+      .card.basic-card
+        .card-body
+          %h5.card-title Records
+          %p.card-text Browsing or managing activity logs
+        .card-footer
+          %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:life_logs' %}"} Go Records page
+    .col-sm-4
+      .card.basic-card
+        .card-body
+          %h5.card-title Activity Type Manager
+          %p.card-text Managing activity types
+        .card-footer
+          %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:activity_types' %}"} Go Activity Type Manager page
+    .col-sm-4
+      .card.basic-card
+        .card-body
+          %h5.card-title Under construction ...
+          %p.card-text (ง ˘ω˘ )ว ｽﾔｯｽﾔｯ
+        .card-footer.text-muted
+          %a(href="#" class="btn btn-outline-primary btn-sm disabled") Go somewhere
