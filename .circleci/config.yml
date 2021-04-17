@@ -28,21 +28,20 @@ commands:
     description: "save 'pipenv install' result into cache"
     steps:
       - save_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}-{{ .Environment.CACHE_VERSION }}
           paths:
             - "venv"
 
-jobs:
-  build:
-    executor: test_executor
+  flake8:
+    description: run linting and metrics
     steps:
-      - checkout
-      - restore_pipenv
       - run:
           command: |
-            sudo pip install pipenv
-            pipenv install --dev
-      - save_pipenv_cache
+            pipenv run flake8 cms/ life_recorder/
+
+  pytest:
+    description: run pytest and save result
+    steps:
       - run:
           command: |
             mkdir test-results
@@ -53,6 +52,38 @@ jobs:
       - store_artifacts:
           path: test-results
           destination: tr1
+
+jobs:
+  build:
+    executor: test_executor
+    steps:
+      - attach_workspace:
+          at: .
+      - checkout
+      - restore_pipenv
+      - run:
+          command: |
+            sudo pip install pipenv
+            pipenv install --dev
+      - save_pipenv_cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  flake8:
+    executor: test_executor
+    steps:
+      - attach_workspace:
+          at: .
+      - flake8
+
+  pytest:
+    executor: test_executor
+    steps:
+      - attach_workspace:
+          at: .
+      - pytest
 
   deploy-heroku:
     machine:
@@ -79,6 +110,12 @@ workflows:
   build_and_deploy:
     jobs:
       - build
+      - flake8:
+          requires:
+            - build
+      - pytest:
+          requires:
+            - build
       - deploy-heroku:
           requires:
             - build
