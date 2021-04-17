@@ -30,7 +30,7 @@ commands:
       - save_cache:
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}-{{ .Environment.CACHE_VERSION }}
           paths:
-            - "venv"
+            - ".venv"
 
   flake8:
     description: run linting and metrics
