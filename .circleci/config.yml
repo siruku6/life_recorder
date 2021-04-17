@@ -32,6 +32,27 @@ commands:
           paths:
             - "venv"
 
+  run_linter:
+    description: run linting and metrics
+    steps:
+      - run:
+          command: |
+            pipenv run flake8 cms/ life_recorder/
+
+  run_pytest:
+    description: run pytest and save result
+    steps:
+      - run:
+          command: |
+            mkdir test-results
+            pipenv run pytest -v --junitxml=test-results/junit.xml
+      # upload and store test result into circleci
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: tr1
+
 jobs:
   build:
     executor: test_executor
@@ -43,16 +64,8 @@ jobs:
             sudo pip install pipenv
             pipenv install --dev
       - save_pipenv_cache
-      - run:
-          command: |
-            mkdir test-results
-            pipenv run pytest -v --junitxml=test-results/junit.xml
-      # upload and store test result into circleci
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: test-results
-          destination: tr1
+      - run_linter
+      - run_pytest
 
   deploy-heroku:
     machine:
