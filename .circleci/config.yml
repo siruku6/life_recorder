@@ -100,7 +100,8 @@ jobs:
           name: heroku deploy
           # INFO git push remote_url current_branch:main
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git $CIRCLE_BRANCH:main
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git $CIRCLE_BRANCH:main \
+            && heroku run python manage.py migrate cms --app $HEROKU_APP
       - run:
           name: heroku maintenance off
           command: heroku maintenance:off --app $HEROKU_APP
