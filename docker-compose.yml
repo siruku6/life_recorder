@@ -15,6 +15,9 @@ services:
     depends_on:
       - waitfordb
       - postgres
+    # INFO: Following two lines are necessary for the backtrace by pdb
+    stdin_open: true
+    tty: true
 
   # HACK: This container make web container to wait postgres container readied
   waitfordb:

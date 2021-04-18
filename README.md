@@ -19,11 +19,13 @@ display activity log
     $ cp .env.example .env
     $ docker-compose build
     $ docker-compose up -d
+    $ docker attach life_recorder_web_1
     $ docker-compose exec web python manage.py createsuperuser
+    >> ** Input information of your superuser! **
     ```
 1. Then, you can access to
     - `localhost:8000/admin`
-    - `localhost:8000/cms/logs`
+    - `localhost:8000/cms`
 
 ### With python on your OS
 1. Install and setup postgresql
@@ -44,10 +46,11 @@ Copy from .env.example to .env, then rewrite it.
     # Setup DB
     $ python manage.py migrate
     $ python manage.py createsuperuser
+    >> ** Input information of your superuser! **
 
     # Run django server
     $ python manage.py runserver
     ```
 1. Then, you can access to
     - `localhost:8000/admin`
-    - `localhost:8000/cms/logs`
+    - `localhost:8000/cms`
