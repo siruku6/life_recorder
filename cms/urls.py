@@ -13,7 +13,8 @@ urlpatterns = [
 
     # 活動種別
     path('activity_types/', views.activity_types, name='activity_types'),
-    # path('activity_types/create/', views.edit_activity_types, name='create_activity_type'),
+    path('activity_types/new/', views.new_activity_type, name='new_activity_type'),
+    path('activity_types/create/', views.edit_activity_type, name='create_activity_type'),
     # path('activity_types/<int:id>/edit/', views.edit_activity_types, name='create_activity_type'),
     # path('activity_types/<int:id>/destroy/', views.del_activity_types, name='destroy_activity_type'),
 
