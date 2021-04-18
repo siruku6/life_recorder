@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 
 from cms.models import Record, ActivityType, Activity
-from cms.forms import RecordForm, ActivityForm
+from cms.forms import RecordForm, ActivityTypeForm, ActivityForm
 
 
 def index(request):
@@ -47,12 +47,38 @@ def del_record(request, record_id):
 
 
 # -----------------------------------------------------------
-#                         Activity
+#                      Activity Type
 # -----------------------------------------------------------
 def activity_types(request):
-    """活動日一覧"""
+    """活動種別一覧"""
     types = ActivityType.objects.all().order_by('id')
     return render(request, 'cms/activity_types.html.haml', {'activity_types': types})
+
+
+def new_activity_type(request):
+    """活動種別登録画面"""
+    form = ActivityTypeForm(request.GET)
+    return render(request, 'cms/edit_activity_type.html.haml', {'form': form},)
+
+
+def edit_activity_type(request, activity_type_id=None):
+    """活動種別の編集"""
+    form = ActivityTypeForm(request.POST)
+    is_valid = form.is_valid()
+
+    if is_valid:
+        activity_type = ActivityType(**form.cleaned_data)
+        if activity_type_id:
+            activity_type = get_object_or_404(activity_type, pk=activity_type_id)
+
+        activity_type.save()
+        return redirect('cms:activity_types')
+    else:
+        return render(
+            request,
+            'cms/edit_activity_type.html.haml',
+            dict(form=form, activity_type_id=activity_type_id)
+        )
 
 
 # -----------------------------------------------------------
@@ -62,7 +88,7 @@ class Activities(ListView):
     """活動内容の一覧"""
     context_object_name = 'activities'
     template_name = 'cms/activities.html.haml'
-    paginate_by = 2
+    paginate_by = 20
 
     def get(self, request, *args, **kwargs):
         record = get_object_or_404(Record, pk=kwargs['record_id'])

@@ -1,8 +1,8 @@
 - extends "cms/base.html.haml"
 
 - block content
-  %h4 Activity Types
-
+  %h4.mt-4.border-bottom Activity Types
+  %a.btn.btn-primary.btn-sm.my-3{href: "{% url 'cms:new_activity_type' %}"} 追加
   %table.table.table-sm.table-striped
     %thead
       %tr
