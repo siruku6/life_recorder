@@ -105,7 +105,7 @@ WSGI_APPLICATION = 'life_recorder.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if VIRTUAL_ENVIRONMENT == 'DOCKER':
     DATABASES = {
@@ -181,6 +181,16 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'life_recorder/static'),
     # os.path.join(BASE_DIR, 'node_modules'),
 )
+
+
+# For localhost
+if DEBUG:
+    def show_toolbar(request):
+        return True
+
+    INSTALLED_APPS += ('debug_toolbar',)
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    DEBUG_TOOLBAR_CONFIG = {'SHOW_TOOLBAR_CALLBACK': show_toolbar, }
 
 
 if VIRTUAL_ENVIRONMENT == 'HEROKU':
