@@ -1,6 +1,10 @@
 # Dev Tools
 .vscode/*
 
+# Each Developer can change
+config/settings/localhost.py
+
+
 # Created by https://www.toptal.com/developers/gitignore/api/node,django
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,django
 

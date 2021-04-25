@@ -1,1 +1,1 @@
-web: gunicorn life_recorder.wsgi --preload --log-file -
+web: gunicorn config.wsgi --preload --log-file -

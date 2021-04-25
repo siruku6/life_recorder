@@ -8,6 +8,10 @@ class HomePageTest(TestCase):
         with pytest.raises(Resolver404):
             resolve('/cms/hoge/')
 
+    def test_index_url(self):
+        result = resolve('/cms/')
+        assert result.url_name == 'index'
+
     def test_exist_url(self):
         result = resolve('/cms/logs/')
         assert result.url_name == 'life_logs'

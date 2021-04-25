@@ -37,7 +37,7 @@ commands:
     steps:
       - run:
           command: |
-            pipenv run flake8 cms/ life_recorder/
+            pipenv run flake8 cms/ config/
 
   pytest:
     description: run pytest and save result
@@ -45,7 +45,7 @@ commands:
       - run:
           command: |
             mkdir test-results
-            pipenv run pytest -v --junitxml=test-results/junit.xml
+            pipenv run pytest --ds='config.settings.circleci' -v --junitxml=test-results/junit.xml
       # upload and store test result into circleci
       - store_test_results:
           path: test-results

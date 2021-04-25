@@ -24,7 +24,7 @@ django-debug-toolbar = "*"
 python_version = "3.8"
 
 [scripts]
-check = "gunicorn --check-config life_recorder.wsgi"
+check = "gunicorn --check-config config.wsgi"
 server = "python manage.py runserver"
-pro = "gunicorn life_recorder.wsgi --preload"
+pro = "gunicorn config.wsgi --preload"
 test = "pytest -vv"

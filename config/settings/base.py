@@ -12,24 +12,18 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 import environ
-import django_heroku
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = environ.Path(__file__) - 2
+BASE_DIR = environ.Path(__file__) - 3
 
 env = environ.Env(
     DEBUG=(bool, False),
-    ENVIRONMENT=(str, 'DOCKER')
 )
+env_file = str(BASE_DIR.path('.env'))
+env.read_env(env_file)
 
-
-# INFO: read heroku settings
-VIRTUAL_ENVIRONMENT = env('ENVIRONMENT')
-if VIRTUAL_ENVIRONMENT == 'HEROKU':
-    import dj_database_url
-else:
-    env_file = str(BASE_DIR.path('.env'))
-    env.read_env(env_file)
+# import pdb; pdb.set_trace()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -38,7 +32,7 @@ else:
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', False)
+# DEBUG = env('DEBUG', False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -70,7 +64,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'life_recorder.urls'
+ROOT_URLCONF = 'config.urls'
 
 
 TEMPLATES_LOADERS = (
@@ -95,48 +89,15 @@ TEMPLATES = [
         },
     },
 ]
-if VIRTUAL_ENVIRONMENT == 'HEROKU':
-    TEMPLATES[0]['OPTIONS']['loaders'] = \
-        ('django.template.loaders.cached.Loader', TEMPLATES_LOADERS),
-# import pdb; pdb.set_trace()
 
-WSGI_APPLICATION = 'life_recorder.wsgi.application'
+
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-if VIRTUAL_ENVIRONMENT == 'DOCKER':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': env('POSTGRES_PASSWORD'),
-            'HOST': 'postgres',
-            'PORT': 5432,
-        }
-    }
-elif VIRTUAL_ENVIRONMENT == 'HEROKU':
-    db_from_env = dj_database_url.config()
-    DATABASES = {
-        'default': db_from_env
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'life_recorder',
-            'USER': env('DB_USER'),
-            'PASSWORD': env('DB_PASSWORD'),
-            'HOST': 'localhost',
-            'PORT': '',
-            'TEST': {
-                'NAME': 'life_record_test',
-            },
-        }
-    }
+DATABASES = {}
 
 
 # Password validation
@@ -178,22 +139,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'life_recorder/static'),
+    os.path.join(BASE_DIR, 'config/static'),
     # os.path.join(BASE_DIR, 'node_modules'),
 )
-
-
-# For localhost
-if DEBUG:
-    def show_toolbar(request):
-        return True
-
-    INSTALLED_APPS += ('debug_toolbar',)
-    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-    DEBUG_TOOLBAR_CONFIG = {'SHOW_TOOLBAR_CALLBACK': show_toolbar, }
-
-
-if VIRTUAL_ENVIRONMENT == 'HEROKU':
-    # INFO: This must be set at the bottom of settings.py
-    # https://devcenter.heroku.com/ja/articles/django-app-configuration
-    django_heroku.settings(locals())

@@ -7,11 +7,16 @@ display activity log
 
 ## Middlewares
 
+- pipenv
 - postgresql
+
+---
+
+**\*You don't have to setup these Middlewares in your OS, if you build your environment with docker and docker-compose !!**
 
 # Development
 
-## How to construct development environment?
+## How to build development environment?
 ### With Docker
 
 1. Execute following commands
@@ -27,8 +32,13 @@ display activity log
     - `localhost:8000/admin`
     - `localhost:8000/cms`
 
+1. You can run automated test by this command
+    ```bash
+    $ docker-compose exec web python manage.py test
+    ```
+
 ### With python on your OS
-1. Install and setup postgresql
+1. Install and setup `pipenv` and `postgresql`
 1. Prepare `.env`  
 Copy from .env.example to .env, then rewrite it.
     ```bash
@@ -41,8 +51,15 @@ Copy from .env.example to .env, then rewrite it.
     |2 |SECRET_KEY |xxxxxx...    |It is for Django                       |
     |3 |DB_USER    |user         |It is username of your postgresql      |
     |4 |DB_PASSWORD|password     |It is password of your postgresql      |
-1. Commands
+1. Prepare `config/settings/localhost.py`
+Copy from `localhost.sample.py` to `localhost.py`.
+    ```bash
+    $ cp config/settings/localhost.sample.py config/settings/localhost.py
     ```
+1. Commands
+    ```bash
+    $ pipenv install --dev
+
     # Setup DB
     $ python manage.py migrate
     $ python manage.py createsuperuser
@@ -54,3 +71,8 @@ Copy from .env.example to .env, then rewrite it.
 1. Then, you can access to
     - `localhost:8000/admin`
     - `localhost:8000/cms`
+
+1. You can run automated test by this command
+    ```bash
+    $ pipenv run test
+    ```
