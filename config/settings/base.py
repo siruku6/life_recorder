@@ -19,6 +19,7 @@ BASE_DIR = environ.Path(__file__) - 3
 
 env = environ.Env(
     DEBUG=(bool, False),
+    ENVIRONMENT=(str, 'DOCKER')
 )
 env_file = str(BASE_DIR.path('.env'))
 env.read_env(env_file)

@@ -29,7 +29,7 @@ def decide_settings_path():
 
     if VIRTUAL_ENVIRONMENT == 'DOCKER':
         settings_file = 'docker'
-    if VIRTUAL_ENVIRONMENT == 'HEROKU':
+    elif VIRTUAL_ENVIRONMENT == 'HEROKU':
         settings_file = 'heroku'
     else:
         settings_file = 'localhost'
