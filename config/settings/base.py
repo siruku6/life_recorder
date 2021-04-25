@@ -12,23 +12,14 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 import environ
-# import django_heroku
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = environ.Path(__file__) - 3
 
 env = environ.Env(
     DEBUG=(bool, False),
-    # ENVIRONMENT=(str, 'DOCKER')
 )
-
-
-# # INFO: read heroku settings
-# VIRTUAL_ENVIRONMENT = env('ENVIRONMENT')
-# if VIRTUAL_ENVIRONMENT == 'HEROKU':
-#     import dj_database_url
-# else:
-
 env_file = str(BASE_DIR.path('.env'))
 env.read_env(env_file)
 
@@ -98,10 +89,7 @@ TEMPLATES = [
         },
     },
 ]
-# if VIRTUAL_ENVIRONMENT == 'HEROKU':
-#     TEMPLATES[0]['OPTIONS']['loaders'] = \
-#         ('django.template.loaders.cached.Loader', TEMPLATES_LOADERS),
-# # import pdb; pdb.set_trace()
+
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -109,39 +97,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 DATABASES = {}
-
-# if VIRTUAL_ENVIRONMENT == 'DOCKER':
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'postgres',
-#             'USER': 'postgres',
-#             'PASSWORD': env('POSTGRES_PASSWORD'),
-#             'HOST': 'postgres',
-#             'PORT': 5432,
-#         }
-#     }
-# elif VIRTUAL_ENVIRONMENT == 'HEROKU':
-#     db_from_env = dj_database_url.config()
-#     DATABASES = {
-#         'default': db_from_env
-#     }
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'life_recorder',
-#             'USER': env('DB_USER'),
-#             'PASSWORD': env('DB_PASSWORD'),
-#             'HOST': 'localhost',
-#             'PORT': '',
-#             'TEST': {
-#                 'NAME': 'life_record_test',
-#             },
-#         }
-#     }
 
 
 # Password validation
@@ -196,9 +152,3 @@ STATICFILES_DIRS = (
 #     INSTALLED_APPS += ('debug_toolbar',)
 #     MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 #     DEBUG_TOOLBAR_CONFIG = {'SHOW_TOOLBAR_CALLBACK': show_toolbar, }
-
-
-# if VIRTUAL_ENVIRONMENT == 'HEROKU':
-#     # INFO: This must be set at the bottom of settings.py
-#     # https://devcenter.heroku.com/ja/articles/django-app-configuration
-#     django_heroku.settings(locals())
