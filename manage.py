@@ -2,11 +2,20 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import environ
+
+env = environ.Env(
+    ENVIRONMENT=(str, 'DOCKER')
+)
+VIRTUAL_ENVIRONMENT = env('ENVIRONMENT')
 
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'life_recorder.settings')
+    settings_file = 'docker' if VIRTUAL_ENVIRONMENT == 'DOCKER' else 'localhost'
+    settings_path = 'config.settings.{}'.format(settings_file)
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_path)
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
