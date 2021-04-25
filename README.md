@@ -51,6 +51,11 @@ Copy from .env.example to .env, then rewrite it.
     |2 |SECRET_KEY |xxxxxx...    |It is for Django                       |
     |3 |DB_USER    |user         |It is username of your postgresql      |
     |4 |DB_PASSWORD|password     |It is password of your postgresql      |
+1. Prepare `config/settings/localhost.py`
+Copy from `localhost.sample.py` to `localhost.py`.
+    ```bash
+    $ cp config/settings/localhost.sample.py config/settings/localhost.py
+    ```
 1. Commands
     ```bash
     $ pipenv install --dev
