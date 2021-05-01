@@ -3,11 +3,7 @@ import django_heroku
 import dj_database_url
 
 from config.settings.base import *
-from config.settings.base import env
 
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', False)
 
 TEMPLATES[0]['OPTIONS']['loaders'] = \
     ('django.template.loaders.cached.Loader', TEMPLATES_LOADERS),

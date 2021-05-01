@@ -45,7 +45,7 @@ commands:
       - run:
           command: |
             mkdir test-results
-            pipenv run pytest --ds='config.settings.circleci' -v --junitxml=test-results/junit.xml
+            pipenv run python manage.py test --debug-mode -v 2 --settings config.settings.circleci
       # upload and store test result into circleci
       - store_test_results:
           path: test-results
@@ -106,6 +106,20 @@ jobs:
           name: heroku maintenance off
           command: heroku maintenance:off --app $HEROKU_APP
 
+  deploy-heroku-staging:
+    machine:
+      image: circleci/classic:edge
+    environment:
+      # HEROKU_API_KEY: You have to set this on CircleCI web console Project Settings.
+      HEROKU_APP: "young-plateau-95242"
+    steps:
+      - checkout
+      - run:
+          name: heroku deploy
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git $CIRCLE_BRANCH:main \
+            && heroku run python manage.py migrate cms --app $HEROKU_APP
+
 workflows:
   version: 2
   build_and_deploy:
@@ -123,3 +137,9 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy-heroku-staging:
+          requires:
+            - build
+          filters:
+            branches:
+              only: develop
