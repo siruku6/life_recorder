@@ -34,7 +34,10 @@ display activity log
 
 1. You can run automated test by this command
     ```bash
-    $ docker-compose exec web python manage.py test
+    $ docker-compose exec web python manage.py test --debug-mode
+
+    # I recommend following options!
+    $ docker-compose exec web python manage.py test --debug-mode -v 2 --pdb --keepdb
     ```
 
 ### With python on your OS

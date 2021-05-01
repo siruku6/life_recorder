@@ -18,18 +18,22 @@
         %th(scope="col")
 
     %tbody
-      - for activity in activities
+      - if activities
+        - for activity in activities
+          %tr
+            %th(scope="row")= activity.id
+            %td= activity.activity_type
+            %td= activity.name
+            %td= activity.start|date:"Y-m-j H:i T"
+            %td= activity.end|date:"Y-m-j H:i T"
+            %td
+              %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:edit_activity' record_id=record.id activity_id=activity.id %}"}
+                修正
+              %a.btn.btn-outline-danger.btn-sm.del_confirm{href: "{% url 'cms:destroy_activity' record_id=record.id activity_id=activity.id %}", 'data-toggle': "modal", 'data-target': "#deleteModal", 'data-pk': "{{ activity.id }}"}
+                削除
+      - else
         %tr
-          %th(scope="row")= activity.id
-          %td= activity.activity_type
-          %td= activity.name
-          %td= activity.start|date:"Y-m-j H:i T"
-          %td= activity.end|date:"Y-m-j H:i T"
-          %td
-            %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:edit_activity' record_id=record.id activity_id=activity.id %}"}
-              修正
-            %a.btn.btn-outline-danger.btn-sm.del_confirm{href: "{% url 'cms:destroy_activity' record_id=record.id activity_id=activity.id %}", 'data-toggle': "modal", 'data-target': "#deleteModal", 'data-pk': "{{ activity.id }}"}
-              削除
+          %td{'colspan': 6} No activities are available.
 
   - include 'partials/confirmation_modal.html.haml'
   - if is_paginated

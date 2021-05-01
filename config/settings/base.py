@@ -33,7 +33,7 @@ env.read_env(env_file)
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = env('DEBUG', False)
+DEBUG = env('DEBUG', False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -143,3 +143,13 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'config/static'),
     # os.path.join(BASE_DIR, 'node_modules'),
 )
+
+
+# For localhost
+if DEBUG:
+    def show_toolbar(request):
+        return True
+
+    INSTALLED_APPS += ('debug_toolbar',)
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    DEBUG_TOOLBAR_CONFIG = {'SHOW_TOOLBAR_CALLBACK': show_toolbar, }
