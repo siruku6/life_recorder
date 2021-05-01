@@ -45,7 +45,7 @@ commands:
       - run:
           command: |
             mkdir test-results
-            pipenv run pytest --ds='config.settings.circleci' -v --junitxml=test-results/junit.xml
+            pipenv run python manage.py test --debug-mode -v 2 --settings config.settings.circleci
       # upload and store test result into circleci
       - store_test_results:
           path: test-results
