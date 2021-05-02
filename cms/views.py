@@ -131,8 +131,11 @@ def preprocess_activity_params(record, params):
     start_hm = params.get('start').split(':')
     end_hm = params.get('end').split(':')
 
-    params['start'] = target_date.replace(hour=int(start_hm[0]), minute=int(start_hm[1]))
-    params['end'] = target_date.replace(hour=int(end_hm[0]), minute=int(end_hm[1]))
+    start_dt = target_date.replace(hour=int(start_hm[0]), minute=int(start_hm[1]))
+    end_dt = target_date.replace(hour=int(end_hm[0]), minute=int(end_hm[1]))
+    params['start'] = start_dt
+    params['end'] = end_dt
+    params['spent_time'] = (end_dt - start_dt).seconds
     return params
 
 

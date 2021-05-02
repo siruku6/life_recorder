@@ -1,4 +1,5 @@
 - extends "cms/base.html.haml"
+- load utils
 - block title
   活動一覧
 
@@ -13,6 +14,7 @@
         %th(scope="col") ID
         %th(scope="col") Type
         %th(scope="col") Name
+        %th(scope="col") Spent Time
         %th(scope="col") Start
         %th(scope="col") End
         %th(scope="col")
@@ -24,6 +26,9 @@
             %th(scope="row")= activity.id
             %td= activity.activity_type
             %td= activity.name
+            %td
+              = activity.spent_time|divide:3600.0
+              h
             %td= activity.start|date:"Y-m-j H:i T"
             %td= activity.end|date:"Y-m-j H:i T"
             %td
@@ -33,7 +38,7 @@
                 削除
       - else
         %tr
-          %td{'colspan': 6} No activities are available.
+          %td{'colspan': 7} No activities are available.
 
   - include 'partials/confirmation_modal.html.haml'
   - if is_paginated

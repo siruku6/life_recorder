@@ -57,7 +57,7 @@ class ActivityForm(forms.ModelForm):
 
     class Meta():
         model = Activity
-        fields = ('activity_type', 'name', 'start', 'end', )
+        fields = ('activity_type', 'name', 'start', 'end', 'spent_time')
         widgets = {
             'start': TimePickerInput(
                 options={
@@ -71,6 +71,7 @@ class ActivityForm(forms.ModelForm):
                     "stepping": 15,
                 }
             ),
+            'spent_time': forms.HiddenInput(),
         }
 
     # INFO: 日付系のsample

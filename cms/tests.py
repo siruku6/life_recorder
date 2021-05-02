@@ -22,6 +22,16 @@ class HomePageTest(TestCase):
         assert result.url_name == 'life_logs'
 
 
+class ActivityModelTests(TestCase):
+    def test_spent_time_is_set(self):
+        """
+        [Example] attribute 'spent_time' is always automatically set
+        """
+        record = create_record()
+        activity = create_activity(record.id, name='act1')
+        assert activity.spent_time == 3600
+
+
 class ActivityViewTests(TestCase):
     def test_no_activities(self):
         """
@@ -41,11 +51,14 @@ class ActivityViewTests(TestCase):
         record = create_record()
         activity1 = create_activity(record.id, name='act1')
         activity2 = create_activity(record.id, name='act2')
+        spent_time1 = (activity1.end - activity1.start).seconds / 3600.0
         response = self.client.get(reverse('cms:activities', kwargs={'record_id': record.id}))
 
         assert response.status_code == 200
         self.assertContains(response, activity1.name)
         self.assertContains(response, activity2.name)
+
+        self.assertContains(response, spent_time1)
         self.assertNotContains(response, "No activities are available.")
 
 
@@ -55,6 +68,11 @@ def create_record(date=None, comment=None):
 
 
 def create_activity(record_id, name=None):
-    start = timezone.now()
-    end = timezone.now() + datetime.timedelta(hours=1)
-    return Activity.objects.create(record_id=record_id, name=name, start=start, end=end)
+    now = timezone.now()
+    start = now
+    end = now + datetime.timedelta(hours=1)
+    spent_time = (end - start).seconds
+    return Activity.objects.create(
+        record_id=record_id, name=name,
+        start=start, end=end, spent_time=spent_time
+    )
