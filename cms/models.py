@@ -35,6 +35,7 @@ class Activity(models.Model):
     name = models.CharField('内容', max_length=255, null=False)
     start = models.DateTimeField('開始', default=timezone.now, null=False)
     end = models.DateTimeField('終了', default=timezone.now, null=False)
+    spent_time = models.PositiveIntegerField('消費時間', null=False)  # seconds
 
     def __str__(self):
         act_type = self.activity_type
