@@ -17,7 +17,11 @@ display activity log
 # Development
 
 ## How to build development environment?
-### With Docker
+
+---
+### A. With Docker
+
+<details><summary>Click here to open! :D</summary><div>
 
 1. Execute following commands
     ```bash
@@ -28,9 +32,6 @@ display activity log
     $ docker-compose exec web python manage.py createsuperuser
     >> ** Input information of your superuser! **
     ```
-1. Then, you can access to
-    - `localhost:8000/admin`
-    - `localhost:8000/cms`
 
 1. You can run automated test by this command
     ```bash
@@ -39,8 +40,12 @@ display activity log
     # I recommend following options!
     $ docker-compose exec web python manage.py test --debug-mode -v 2 --pdb --keepdb
     ```
+</div></details>
 
-### With python on your OS
+### B. With python on your OS
+
+<details><summary>Click here to open! :D</summary><div>
+
 1. Install and setup `pipenv` and `postgresql`
 1. Prepare `.env`  
 Copy from .env.example to .env, then rewrite it.
@@ -71,11 +76,24 @@ Copy from `localhost.sample.py` to `localhost.py`.
     # Run django server
     $ python manage.py runserver
     ```
-1. Then, you can access to
-    - `localhost:8000/admin`
-    - `localhost:8000/cms`
 
 1. You can run automated test by this command
     ```bash
     $ pipenv run test
     ```
+</div></details>
+
+---
+
+## After 'A.' or 'B.'
+
+1. You can access to
+    - Django Admin  
+    `localhost:8000/admin`
+    - App Top  
+    `localhost:8000/cms`
+    - API Root  
+    `localhost:8000/api/v1`
+
+1. You can display the sample response of API  
+    `localhost:8000/api/v1/records/?format=json`

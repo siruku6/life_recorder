@@ -5,9 +5,10 @@ from api import views
 router = routers.DefaultRouter()
 router.register('users', views.UserViewSet)
 router.register('groups', views.GroupViewSet)
+router.register('records', views.RecordViewSet)
 
 app_name = 'api/v1'
 urlpatterns = [
-    path('', include(router.urls)),
+    path('v1/', include(router.urls)),
     # path('v1/records', views.records, name='records')
 ]
