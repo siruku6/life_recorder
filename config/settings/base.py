@@ -29,17 +29,20 @@ env.read_env(env_file)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+
+####################
+#     SECURITY
+####################
 SECRET_KEY = env('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', False)
 
 ALLOWED_HOSTS = ['*']
 
 
-# Application definition
-
+###########################################
+# Application definition (Core settings)
+###########################################
 INSTALLED_APPS = [
     'bootstrap4',
     'bootstrap_datepicker_plus',
@@ -50,8 +53,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'api.apps.ApiConfig',
     'cms.apps.CmsConfig',
 ]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -95,7 +108,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
+###########################
+#        Database
+###########################
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATABASES = {}
@@ -120,12 +135,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+#################################
+#     Internationalization
+#################################
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 # LANGUAGE_CODE = 'ja'
-
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Tokyo'
 USE_I18N = True
@@ -133,7 +148,9 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+######################################################
+#      Static files (CSS, JavaScript, Images)
+######################################################
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
@@ -145,8 +162,66 @@ STATICFILES_DIRS = (
 )
 
 
-# For localhost
+###########################
+#         Logging
+###########################
+LOGGING = {
+    'version': 1,
+    # Don't disable logger settings already exist
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d %(message)s '
+                      '%(pathname)s:%(lineno)d',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+        'console': {
+            'format': '%(asctime)s [%(levelname)s] %(message)s %(pathname)s:%(lineno)d\n',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG' if DEBUG else 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'log/app.log',
+            'maxBytes': 50000,
+            'backupCount': 3,
+            'formatter': 'default',
+        },
+        'console': {
+            'level': 'DEBUG' if DEBUG else 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file'],
+            'level': 'DEBUG' if DEBUG else 'INFO',
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+
+
+###########################
+#      For localhost
+###########################
 if DEBUG:
+    # 発行されるSQL文を出力するための設定
+    LOGGING['loggers']['django.db.backends'] = {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+        'propagate': False,
+    }
+
+    # The following lines are for 'django-debug-toolbar'
     def show_toolbar(request):
         return True
 
