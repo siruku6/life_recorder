@@ -172,7 +172,11 @@ LOGGING = {
     'formatters': {
         'default': {
             'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d %(message)s '
-                      '%(pathname)s:%(lineno)d\n',
+                      '%(pathname)s:%(lineno)d',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+        'console': {
+            'format': '%(asctime)s [%(levelname)s] %(message)s %(pathname)s:%(lineno)d\n',
             'datefmt': '%Y-%m-%d %H:%M:%S'
         },
     },
@@ -188,7 +192,7 @@ LOGGING = {
         'console': {
             'level': 'DEBUG' if DEBUG else 'INFO',
             'class': 'logging.StreamHandler',
-            'formatter': 'default',
+            'formatter': 'console',
         },
     },
     'loggers': {
