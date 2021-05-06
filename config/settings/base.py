@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import sys
 import environ
 
 
@@ -213,7 +214,7 @@ LOGGING = {
 ###########################
 #      For localhost
 ###########################
-if DEBUG:
+if DEBUG and 'test' not in sys.argv:
     # 発行されるSQL文を出力するための設定
     LOGGING['loggers']['django.db.backends'] = {
         'handlers': ['console'],

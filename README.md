@@ -1,16 +1,20 @@
 [![CircleCI Status](https://circleci.com/gh/siruku6/life_recorder.svg?style=svg)](https://app.circleci.com/pipelines/github/siruku6/life_recorder?branch=master)
 
 # life_recorder
-display activity log
+Display activity log  
+In the future, these logs are showed in the form of chart (perhaps...)
 
 # Requirement
 
-## Middlewares
+You need to setup these and to enable `docker-compose` to run.
+
+- docker
+- docker-compose
+
+## Other Middlewares
 
 - pipenv
 - postgresql
-
----
 
 **\*You don't have to setup these Middlewares in your OS, if you build your environment with docker and docker-compose !!**
 
@@ -18,14 +22,23 @@ display activity log
 
 ## How to build development environment?
 
----
-### A. With Docker
+### With Docker
 
 <details><summary>Click here to open! :D</summary><div>
 
-1. Execute following commands
+1. Copy `.env`
     ```bash
     $ cp .env.example .env
+    ```
+    |No|Name       |Value Example|Note                                   |
+    |:-|:----------|:------------|:--------------------------------------|
+    |1 |DEBUG      |True         |True => Display error detail on browser|
+    |2 |SECRET_KEY |xxxxxx...    |It is for Django                       |
+    |3 |DB_USER    |user         |It is username of your postgresql      |
+    |4 |DB_PASSWORD|password     |It is password of your postgresql      |
+
+1. Execute following commands
+    ```bash
     $ docker-compose build
     $ docker-compose up -d
     $ docker attach life_recorder_web_1
@@ -42,50 +55,7 @@ display activity log
     ```
 </div></details>
 
-### B. With python on your OS
-
-<details><summary>Click here to open! :D</summary><div>
-
-1. Install and setup `pipenv` and `postgresql`
-1. Prepare `.env`  
-Copy from .env.example to .env, then rewrite it.
-    ```bash
-    $ cp .env.example .env
-    $ vim .env
-    ```
-    |No|Name       |Value Example|Note                                   |
-    |:-|:----------|:------------|:--------------------------------------|
-    |1 |DEBUG      |True         |True => Display error detail on browser|
-    |2 |SECRET_KEY |xxxxxx...    |It is for Django                       |
-    |3 |DB_USER    |user         |It is username of your postgresql      |
-    |4 |DB_PASSWORD|password     |It is password of your postgresql      |
-1. Prepare `config/settings/localhost.py`
-Copy from `localhost.sample.py` to `localhost.py`.
-    ```bash
-    $ cp config/settings/localhost.sample.py config/settings/localhost.py
-    ```
-1. Commands
-    ```bash
-    $ pipenv install --dev
-
-    # Setup DB
-    $ python manage.py migrate
-    $ python manage.py createsuperuser
-    >> ** Input information of your superuser! **
-
-    # Run django server
-    $ python manage.py runserver
-    ```
-
-1. You can run automated test by this command
-    ```bash
-    $ pipenv run test
-    ```
-</div></details>
-
----
-
-## After 'A.' or 'B.'
+## After building environment
 
 1. You can access to
     - Django Admin  
