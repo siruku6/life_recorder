@@ -4,7 +4,7 @@
 Display activity log  
 In the future, these logs are showed in the form of chart (perhaps...)
 
-# Requirement
+# 1. Requirement
 
 You need to setup these and to enable `docker-compose` to run.
 
@@ -18,7 +18,7 @@ You need to setup these and to enable `docker-compose` to run.
 
 **\*You don't have to setup these Middlewares in your OS, if you build your environment with docker and docker-compose !!**
 
-# Development
+# 2. Development
 
 ## How to build development environment?
 
@@ -57,6 +57,8 @@ You need to setup these and to enable `docker-compose` to run.
 
 ## After building environment
 
+### Access to APP
+
 1. You can access to
     - Django Admin  
     `localhost:8000/admin`
@@ -67,3 +69,22 @@ You need to setup these and to enable `docker-compose` to run.
 
 1. You can display the sample response of API  
     `localhost:8000/api/v1/records/?format=json`
+
+### Adding pip module
+
+If you add any pip module, then you have to rerun `docker-compose build`,  
+because pip modules are installed in Docker image.
+
+# 3. Contribution
+
+Before `commit` or `push`, please run following checks, and confirm all of them are successful!
+
+1. flake8  
+    ```bash
+    $ docker-compose exec web flake8
+    ```
+
+1. unittest  
+    ```bash
+    $ docker-compose exec python manage.py test --debug-mode
+    ```
