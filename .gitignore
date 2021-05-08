@@ -1,8 +1,8 @@
 # Dev Tools
 .vscode/*
 
-# Each Developer can change
-config/settings/localhost.py
+# Django log by config/settings/base.py
+log/*
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,django
