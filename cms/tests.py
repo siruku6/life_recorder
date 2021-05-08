@@ -45,6 +45,18 @@ class ActivityTypeModelTests(TestCase):
             duplicated_act_type.full_clean()
 
 
+class RecordModelTests(TestCase):
+    def test_duplicated_activity_type(self):
+        """
+        [Example] attribute 'date' is duplicated
+        """
+        date = datetime.date.today()
+        _ = create_record(date=date)
+        with self.assertRaises(ValidationError):
+            duplicated_record = Record(date=date)
+            duplicated_record.full_clean()
+
+
 class ActivityViewTests(TestCase):
     def test_no_activities(self):
         """
