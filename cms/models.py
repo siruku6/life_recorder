@@ -5,9 +5,9 @@ from django.utils import timezone
 
 class Record(models.Model):
     """Record"""
-    date = models.DateTimeField(
+    date = models.DateField(
         '日付', max_length=255,
-        default=datetime.datetime.today,
+        default=datetime.date.today,
         null=False
     )
     comment = models.TextField('コメント', blank=True, null=True)
@@ -19,7 +19,7 @@ class Record(models.Model):
 
 class ActivityType(models.Model):
     """ActivityType"""
-    name = models.CharField('種別', max_length=50, null=False)
+    name = models.CharField('種別', max_length=50, null=False, unique=True)
     color = models.CharField('色コード', max_length=20, blank=True, null=True)
 
     def __str__(self):

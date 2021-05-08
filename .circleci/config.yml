@@ -37,7 +37,7 @@ commands:
     steps:
       - run:
           command: |
-            pipenv run flake8 cms/ config/
+            pipenv run flake8 api/ cms/ config/
 
   pytest:
     description: run pytest and save result

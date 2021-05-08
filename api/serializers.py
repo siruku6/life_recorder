@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from cms.models import Record, Activity, ActivityType
+# from cms.models import Record, Activity, ActivityType
 from rest_framework import serializers
 
 

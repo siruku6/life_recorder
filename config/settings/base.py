@@ -41,7 +41,7 @@ ALLOWED_HOSTS = ['*']
 
 
 ###########################################
-# Application definition (Core settings)
+#  Application definition (Core settings)
 ###########################################
 INSTALLED_APPS = [
     'bootstrap4',
@@ -111,6 +111,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 ###########################
 #        Database
 ###########################
+# INFO: `BigAutoField` is enabled in django 3.2 as default of type of column `id`.
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATABASES = {}
@@ -208,23 +209,3 @@ LOGGING = {
         },
     },
 }
-
-
-###########################
-#      For localhost
-###########################
-if DEBUG:
-    # 発行されるSQL文を出力するための設定
-    LOGGING['loggers']['django.db.backends'] = {
-        'handlers': ['console'],
-        'level': 'DEBUG',
-        'propagate': False,
-    }
-
-    # The following lines are for 'django-debug-toolbar'
-    def show_toolbar(request):
-        return True
-
-    INSTALLED_APPS += ('debug_toolbar',)
-    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-    DEBUG_TOOLBAR_CONFIG = {'SHOW_TOOLBAR_CALLBACK': show_toolbar, }
