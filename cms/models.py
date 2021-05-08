@@ -8,6 +8,7 @@ class Record(models.Model):
     date = models.DateField(
         '日付', max_length=255,
         default=datetime.date.today,
+        unique=True,
         null=False
     )
     comment = models.TextField('コメント', blank=True, null=True)
