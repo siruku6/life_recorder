@@ -1,11 +1,12 @@
 import datetime
 
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import resolve, Resolver404, reverse
 from django.utils import timezone
 import pytest
 
-from .models import Activity, Record
+from cms.models import Activity, ActivityType, Record
 
 
 class HomePageTest(TestCase):
@@ -30,6 +31,18 @@ class ActivityModelTests(TestCase):
         record = create_record()
         activity = create_activity(record.id, name='act1')
         assert activity.spent_time == 3600
+
+
+class ActivityTypeModelTests(TestCase):
+    def test_duplicated_activity_type(self):
+        """
+        [Example] attribute 'name' is duplicated
+        """
+        name = 'test_activity_type'
+        _ = create_activity_type(name=name)
+        with self.assertRaises(ValidationError):
+            duplicated_act_type = ActivityType(name=name)
+            duplicated_act_type.full_clean()
 
 
 class ActivityViewTests(TestCase):
@@ -65,6 +78,11 @@ class ActivityViewTests(TestCase):
 def create_record(date=None, comment=None):
     if date is None: date = timezone.now()
     return Record.objects.create(date=date, comment=comment)
+
+
+def create_activity_type(name=None):
+    if name is None: name = 'hoge'
+    return ActivityType.objects.create(name=name, color='#123456')
 
 
 def create_activity(record_id, name=None):
