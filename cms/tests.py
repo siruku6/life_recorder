@@ -139,7 +139,7 @@ def factory_create_record(date: datetime.date = None, comment: str = None) -> Re
 
 
 def factory_create_activity_type(name: str = None) -> ActivityType:
-    if name is None: name = 'hoge'
+    if name is None: name = FAKER_INSTANCE.unique.sentence()
     return ActivityType.objects.create(name=name, color='#123456')
 
 
