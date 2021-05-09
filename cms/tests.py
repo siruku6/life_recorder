@@ -4,12 +4,17 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import resolve, Resolver404, reverse
 from django.utils import timezone
+
+from faker import Faker
 import pytest
 
 from cms.models import Activity, ActivityType, Record
 
 
-class HomePageTest(TestCase):
+FAKER_INSTANCE = Faker(['en_US', 'ja_JP'])
+
+
+class UrlTest(TestCase):
     def test_not_exist_url(self):
         with pytest.raises(Resolver404):
             resolve('/cms/hoge/')
@@ -87,8 +92,16 @@ class ActivityViewTests(TestCase):
         self.assertNotContains(response, "No activities are available.")
 
 
+class RecordViewTests(TestCase):
+    def test_logs(self):
+        record = create_record()
+        response = self.client.get(reverse('cms:life_logs'))
+        self.assertQuerysetEqual(response.context['records'], [record], ordered=False)
+
+
 def create_record(date=None, comment=None):
-    if date is None: date = timezone.now()
+    if date is None: date = FAKER_INSTANCE.date_time().date()
+    if comment is None: comment = FAKER_INSTANCE.text(max_nb_chars=200)
     return Record.objects.create(date=date, comment=comment)
 
 

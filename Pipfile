@@ -21,6 +21,7 @@ flake8 = "*"
 pytest-django = "*"
 pytest = "*"
 django-debug-toolbar = "*"
+faker = "*"
 
 [requires]
 python_version = "3.8"
