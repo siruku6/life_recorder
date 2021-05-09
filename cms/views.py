@@ -127,12 +127,16 @@ def edit_activity(request, record_id, activity_id=None):
 
 
 def preprocess_activity_params(record, params):
-    target_date = record.date.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=9)))
+    target_date = datetime.datetime.combine(
+        record.date,
+        datetime.time(),
+        tzinfo=datetime.timezone(datetime.timedelta(hours=9))
+    )
     start_hm = params.get('start').split(':')
     end_hm = params.get('end').split(':')
-
     start_dt = target_date.replace(hour=int(start_hm[0]), minute=int(start_hm[1]))
     end_dt = target_date.replace(hour=int(end_hm[0]), minute=int(end_hm[1]))
+
     params['start'] = start_dt
     params['end'] = end_dt
     params['spent_time'] = (end_dt - start_dt).seconds
