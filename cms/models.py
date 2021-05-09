@@ -43,3 +43,18 @@ class Activity(models.Model):
         display = 'id({}) {} - {}'.format(self.id, self.activity_type.name, self.name) \
             if act_type is not None else self.name
         return display
+
+
+class TemplateActivity(models.Model):
+    """TemplateActivity"""
+    activity_type = models.ForeignKey(
+        ActivityType, verbose_name='種別', related_name='template_activities',
+        on_delete=models.CASCADE, null=True
+    )
+    name = models.CharField('内容', max_length=255, null=False, unique=True)
+
+    def __str__(self):
+        act_type = self.activity_type
+        display = 'id({}) {} - {}'.format(self.id, self.activity_type.name, self.name) \
+            if act_type is not None else self.name
+        return display

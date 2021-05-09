@@ -2,7 +2,7 @@ import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 
-from cms.models import Record, ActivityType, Activity
+from cms.models import Record, ActivityType, Activity, TemplateActivity
 from cms.forms import RecordForm, ActivityTypeForm, ActivityForm
 
 
@@ -117,6 +117,8 @@ def edit_activity(request, record_id, activity_id=None):
             activity = form.save(commit=False)
             activity.record = record
             activity.save()
+            create_template_activity(params)
+
             return redirect('cms:activities', record_id=record_id)
     else:
         form = ActivityForm(instance=activity)
@@ -127,19 +129,30 @@ def edit_activity(request, record_id, activity_id=None):
 
 
 def preprocess_activity_params(record, params):
-    target_date = record.date.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=9)))
+    target_date = datetime.datetime.combine(
+        record.date,
+        datetime.time(),
+        tzinfo=datetime.timezone(datetime.timedelta(hours=9))
+    )
     start_hm = params.get('start').split(':')
     end_hm = params.get('end').split(':')
-
     start_dt = target_date.replace(hour=int(start_hm[0]), minute=int(start_hm[1]))
     end_dt = target_date.replace(hour=int(end_hm[0]), minute=int(end_hm[1]))
+
     params['start'] = start_dt
     params['end'] = end_dt
     params['spent_time'] = (end_dt - start_dt).seconds
     return params
 
 
-def del_activity(request, record_id, activity_id=None):
+def create_template_activity(params: dict) -> TemplateActivity:
+    tmp_act, _ = TemplateActivity.objects.update_or_create(
+        name=params['name'], defaults={'activity_type_id': params['activity_type']}
+    )
+    return tmp_act
+
+
+def del_activity(request, record_id: int, activity_id: int = None):
     """活動内容の削除"""
     activity = get_object_or_404(Activity, pk=activity_id)
     activity.delete()
