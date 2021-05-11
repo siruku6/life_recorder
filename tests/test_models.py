@@ -10,6 +10,7 @@ import pytest
 
 from cms.models import Activity, ActivityType, Record, TemplateActivity
 from cms.views import create_template_activity
+from tests.factories import *
 
 
 FAKER_INSTANCE = Faker(['en_US', 'ja_JP'])
@@ -34,8 +35,7 @@ class ActivityModelTests(TestCase):
         """
         [Example] attribute 'spent_time' is always automatically set
         """
-        record = factory_create_record()
-        activity = factory_create_activity(record.id, name='act1')
+        activity = factory_create_activity(name='act1')
         assert activity.spent_time == 3600
 
 
@@ -45,7 +45,7 @@ class ActivityTypeModelTests(TestCase):
         [Example] attribute 'name' is duplicated
         """
         name = 'test_activity_type'
-        _ = factory_create_activity_type(name=name)
+        _ = ActivityTypeFactory(name=name)
         with self.assertRaises(ValidationError):
             duplicated_act_type = ActivityType(name=name)
             duplicated_act_type.full_clean()
@@ -57,7 +57,7 @@ class RecordModelTests(TestCase):
         [Example] attribute 'date' is duplicated
         """
         date = datetime.date.today()
-        _ = factory_create_record(date=date)
+        _ = RecordFactory(date=date)
         with self.assertRaises(ValidationError):
             duplicated_record = Record(date=date)
             duplicated_record.full_clean()
@@ -69,7 +69,7 @@ class ActivityViewTests(TestCase):
         """
         [Example] If no activities exist, an appropriate message is displayed.
         """
-        record = factory_create_record()
+        record = RecordFactory()
         response = self.client.get(reverse('cms:activities', kwargs={'record_id': record.id}))
 
         assert response.status_code == 200
@@ -80,9 +80,10 @@ class ActivityViewTests(TestCase):
         """
         [Example] If some activities exist, those records are displayed.
         """
-        record = factory_create_record()
-        activity1 = factory_create_activity(record.id, name='act1')
-        activity2 = factory_create_activity(record.id, name='act2')
+        record = RecordFactory()
+        activity1 = ActivityFactory(record=record, name='act1')
+        activity2 = ActivityFactory(record=record, name='act2')
+
         spent_time1 = (activity1.end - activity1.start).seconds / 3600.0
         response = self.client.get(reverse('cms:activities', kwargs={'record_id': record.id}))
 
@@ -97,7 +98,7 @@ class ActivityViewTests(TestCase):
         """
         [Example] create a template_activity.
         """
-        act_type = factory_create_activity_type()
+        act_type = ActivityTypeFactory()
         tmp_act = create_template_activity({
             'name': FAKER_INSTANCE.text(max_nb_chars=255),
             'activity_type': act_type.id
@@ -108,8 +109,8 @@ class ActivityViewTests(TestCase):
         """
         [Example] update activity_type_id of a template_activity.
         """
-        act_type1 = factory_create_activity_type()
-        act_type2 = factory_create_activity_type()
+        act_type1 = ActivityTypeFactory()
+        act_type2 = ActivityTypeFactory()
         tmp_act_name = FAKER_INSTANCE.sentence()
 
         tmp_act1 = create_template_activity({
@@ -127,28 +128,18 @@ class ActivityViewTests(TestCase):
 
 class RecordViewTests(TestCase):
     def test_logs(self):
-        record = factory_create_record()
+        record = RecordFactory()
         response = self.client.get(reverse('cms:life_logs'))
         self.assertQuerysetEqual(response.context['records'], [record], ordered=False)
 
 
-def factory_create_record(date: datetime.date = None, comment: str = None) -> Record:
-    if date is None: date = FAKER_INSTANCE.date_time().date()
-    if comment is None: comment = FAKER_INSTANCE.text(max_nb_chars=200)
-    return Record.objects.create(date=date, comment=comment)
-
-
-def factory_create_activity_type(name: str = None) -> ActivityType:
-    if name is None: name = FAKER_INSTANCE.unique.word()
-    return ActivityType.objects.create(name=name, color='#123456')
-
-
-def factory_create_activity(record_id: int, name: str = None) -> Activity:
+def factory_create_activity(name: str = None) -> Activity:
+    record = RecordFactory()
     now = timezone.now()
     start = now
     end = now + datetime.timedelta(hours=1)
     spent_time = (end - start).seconds
     return Activity.objects.create(
-        record_id=record_id, name=name,
+        record_id=record.id, name=name,
         start=start, end=end, spent_time=spent_time
     )
