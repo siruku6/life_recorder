@@ -135,7 +135,7 @@ class RecordViewTests(TestCase):
 
 def factory_create_activity(name: str = None) -> Activity:
     record = RecordFactory()
-    now = timezone.now()
+    now = timezone.localtime()
     start = now
     end = now + datetime.timedelta(hours=1)
     spent_time = (end - start).seconds

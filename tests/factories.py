@@ -1,4 +1,5 @@
 import datetime
+import pytz
 import factory
 from faker import Faker
 
@@ -27,6 +28,6 @@ class ActivityFactory(factory.django.DjangoModelFactory):
         model = Activity
     record = factory.SubFactory(RecordFactory)
     name = FAKER_INSTANCE.unique.word()
-    start = FAKER_INSTANCE.unique.date_time()
+    start = FAKER_INSTANCE.unique.date_time(pytz.timezone('Asia/Tokyo'))
     end = start + datetime.timedelta(minutes=30)
     spent_time = (end - start).seconds
