@@ -58,3 +58,24 @@ class TemplateActivity(models.Model):
         display = 'id({}) {} - {}'.format(self.id, self.activity_type.name, self.name) \
             if act_type is not None else self.name
         return display
+
+
+DEFAULT_ACTIVITY_TYPES = [
+    {"name": "Study", "color": "#08f718"},
+    {"name": "Sports", "color": "#004cff"},
+    {"name": "Necessity", "color": "#00d9ff"},
+    {"name": "Challenge", "color": "#fff700"},
+    {"name": "Relaxation", "color": "#ffb3e7"}
+]
+
+
+def seed_default_data(sender, **kwargs):
+    default_types = [default_type['name'] for default_type in DEFAULT_ACTIVITY_TYPES]
+    existing_types = ActivityType.objects \
+                                 .filter(name__in=default_types) \
+                                 .values_list('name', flat=True)
+    lacking_types = set(default_types) - set(existing_types)
+
+    for type_dict in DEFAULT_ACTIVITY_TYPES:
+        if type_dict['name'] in lacking_types:
+            ActivityType.objects.create(**type_dict)
