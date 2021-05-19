@@ -1,4 +1,5 @@
 [![CircleCI Status](https://circleci.com/gh/siruku6/life_recorder.svg?style=svg)](https://app.circleci.com/pipelines/github/siruku6/life_recorder?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a8818b78f606cad7164c/maintainability)](https://codeclimate.com/github/siruku6/life_recorder/maintainability)
 
 # life_recorder
 Display activity log  

@@ -1,4 +1,5 @@
 import datetime
+from django.db.models import QuerySet
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 
@@ -15,7 +16,11 @@ def index(request):
 # -----------------------------------------------------------
 def life_logs(request):
     """活動日一覧"""
-    records = Record.objects.all().order_by('id')
+    today: datetime = datetime.date.today()
+
+    if not Record.objects.filter(date=today).exists():
+        Record(date=today).save()
+    records: QuerySet = Record.objects.all().order_by('id')
     return render(request, 'cms/logs.html.haml', {'records': records})
 
 
