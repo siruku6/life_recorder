@@ -16,9 +16,9 @@
     %meta(charset="UTF-8")
     %meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
     - block extra_css
+      %link(rel="stylesheet" type="text/css" href="{% static 'stylesheets/modules/jquery-ui/jquery-ui.min.css' %}")
+      %link(rel="stylesheet" type="text/css" href="{% static 'stylesheets/modules/jquery-ui/jquery-ui.theme.min.css' %}")
       %link(rel="stylesheet" type="text/css" href="{% static 'stylesheets/cms/base.css' %}")
-      %link(rel="stylesheet" type="text/css" href="{% static 'jquery-ui-dist/jquery-ui.min.css' %}")
-      %link(rel="stylesheet" type="text/css" href="{% static 'jquery-ui-dist/jquery-ui.theme.min.css' %}")
     %title
       - block title
         My books
@@ -31,5 +31,5 @@
     - block extra_js
       -# INFO: This line is commented out because jquery is already loaded via bootstrap.
       -# %script(src="{% static 'jquery/dist/jquery.min.js' %}" type="text/javascript")
-      %script(src="{% static 'jquery-ui-dist/jquery-ui.min.js' %}" type="text/javascript")
+      %script(src="{% static 'javascripts/modules/jquery-ui/jquery-ui.min.js' %}" type="text/javascript")
       %script(src="{% static 'javascripts/cms/autocomplete_activity.js' %}" type="text/javascript")
