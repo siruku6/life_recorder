@@ -9,5 +9,8 @@
   },
   "author": "Seiya Sasaki <sirukufarios@gmail.com>",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^3.6.0",
+    "jquery-ui-dist": "^1.12.1"
+  }
 }
