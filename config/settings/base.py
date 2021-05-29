@@ -159,7 +159,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
-    # os.path.join(BASE_DIR, 'node_modules'),
+    os.path.join(BASE_DIR, 'node_modules'),
 )
 
 
@@ -177,7 +177,7 @@ LOGGING = {
             'datefmt': '%Y-%m-%d %H:%M:%S'
         },
         'console': {
-            'format': '%(asctime)s [%(levelname)s] %(message)s %(pathname)s:%(lineno)d\n',
+            'format': '%(asctime)s [%(levelname)s] %(message)s\n',
             'datefmt': '%Y-%m-%d %H:%M:%S'
         },
     },
