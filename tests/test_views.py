@@ -13,6 +13,13 @@ FAKER_INSTANCE = Faker(['en_US', 'ja_JP'])
 
 class ActivityViewTests(TestCase):
     """ ActivityView """
+    def test_record_date_display(self):
+        date: datetime.date = datetime.date(2021, 1, 1)
+        record: Record = RecordFactory(date=date)
+        response = self.client.get(reverse('cms:activities', kwargs={'record_id': record.id}))
+
+        self.assertContains(response, date.strftime('%Y-%m-%d'))
+
     def test_no_activities(self):
         """
         [Example] If no activities exist, an appropriate message is displayed.
@@ -38,6 +45,7 @@ class ActivityViewTests(TestCase):
         assert response.status_code == 200
         self.assertContains(response, activity1.name)
         self.assertContains(response, activity2.name)
+        self.assertContains(response, activity1.start.strftime('%Y-%m-%d'))
 
         self.assertContains(response, spent_time1)
         self.assertNotContains(response, "No activities are available.")
@@ -81,6 +89,13 @@ class RecordViewTests(TestCase):
         today: datetime = datetime.date.today()
         dates = Record.objects.values_list('date', flat=True)
         self.assertIn(today, dates)
+
+    def test_record_date_display(self):
+        date: datetime.date = datetime.date(2021, 1, 1)
+        _: Record = RecordFactory(date=date)
+        response = self.client.get(reverse('cms:life_logs'))
+
+        self.assertContains(response, date.strftime('%Y-%m-%d'))
 
     def test_created_record_shown(self):
         record: Record = RecordFactory()

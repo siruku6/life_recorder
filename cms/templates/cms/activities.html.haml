@@ -6,7 +6,7 @@
 - block content
   %h4.mt-4.border-bottom
     活動一覧
-    %small.text-muted.ml-3= record.date|date:"Y-m-j"
+    %small.text-muted.ml-3= record.date|date:"Y-m-d"
   %a.btn.btn-primary.btn-sm.my-3{href: "{% url 'cms:create_activity' record_id=record.id %}"} 追加
   %table.table.table-striped.table-bordered.table-sm
     %thead
@@ -29,8 +29,8 @@
             %td
               = activity.spent_time|divide:3600.0
               h
-            %td= activity.start|date:"Y-m-j H:i T"
-            %td= activity.end|date:"Y-m-j H:i T"
+            %td= activity.start|date:"Y-m-d H:i T"
+            %td= activity.end|date:"Y-m-d H:i T"
             %td
               %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:edit_activity' record_id=record.id activity_id=activity.id %}"}
                 修正
