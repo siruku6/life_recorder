@@ -5,3 +5,11 @@ h4 {
 .basic-card {
     height: 200px;
 }
+
+/* -------------- jQuery Autocomplete -------------- */
+.autocomplete-custom-highlight { background: yellow; }
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
