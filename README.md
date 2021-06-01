@@ -73,8 +73,9 @@ You need to setup these and to enable `docker-compose` to run.
 
 ### Adding pip module
 
-If you add any pip module, then you have to rerun `docker-compose build`,  
-because pip modules are installed in Docker image.
+If you add any pip module,  
+then you have to rewrite `requirements.txt` and rerun `docker-compose build`,  
+because pip modules are installed in Docker image according to `requirements.txt`.
 
 # 3. Contribution
 

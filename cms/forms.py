@@ -59,6 +59,12 @@ class ActivityForm(forms.ModelForm):
         model = Activity
         fields = ('activity_type', 'name', 'start', 'end', 'spent_time')
         widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'id': 'activity-name',
+                    'autocomplete': 'off'
+                }
+            ),
             'start': TimePickerInput(
                 options={
                     "format": 'HH:mm',

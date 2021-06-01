@@ -16,7 +16,7 @@
       - for record in records
         %tr
           %th(scope="row")= record.id
-          %td= record.date|date:"Y-m-j"
+          %td= record.date|date:"Y-m-d"
           %td= record.comment
           %td
             %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:edit_record' record_id=record.id %}"}
