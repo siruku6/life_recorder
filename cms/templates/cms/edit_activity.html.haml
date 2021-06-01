@@ -13,3 +13,7 @@
       - include 'partials/bootstrap_submit.html.haml'
 
   %a.btn.btn-outline-secondary.btn-sm(href="{% url 'cms:activities' record_id=record_id %}") 戻る
+
+  %ul#autocomplete-candidates{'hidden': True}
+    - for act in template_activities
+      %li.candidate= act.name
