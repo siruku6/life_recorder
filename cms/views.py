@@ -128,9 +128,17 @@ def edit_activity(request, record_id, activity_id=None):
     else:
         form = ActivityForm(instance=activity)
 
+    template_activities: QuerySet = TemplateActivity.objects \
+                                                    .all() \
+                                                    .order_by('name')
+
     return render(
         request, 'cms/edit_activity.html.haml',
-        dict(form=form, record_id=record_id, activity_id=activity_id))
+        dict(
+            form=form, record_id=record_id, activity_id=activity_id,
+            template_activities=template_activities
+        )
+    )
 
 
 def preprocess_activity_params(record, params):
