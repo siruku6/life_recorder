@@ -16,4 +16,4 @@
 
   %ul#autocomplete-candidates{'hidden': True}
     - for act in template_activities
-      %li.candidate= act.name
+      %li.candidate{class: '{{ act.activity_type.name }}'}= act.name
