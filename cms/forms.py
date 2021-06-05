@@ -18,6 +18,14 @@ class RecordForm(forms.ModelForm):
             ),
         }
 
+    def clean_comment(self):
+        comment: str = self.cleaned_data['comment']
+        if comment is not None and len(comment) > 255:
+            raise forms.ValidationError(
+                'Please input less than %(max_length)s characters', params={'max_length': 255}
+            )
+        return comment
+
 
 class ActivityTypeForm(forms.Form):
     """活動内容のフォーム"""
