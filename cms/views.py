@@ -27,12 +27,13 @@ def life_logs(request):
 def edit_record(request, record_id=None):
     """活動日の編集"""
     if record_id:
-        record = get_object_or_404(Record, pk=record_id)
+        record: Record = get_object_or_404(Record, pk=record_id)
     else:
-        record = Record()
+        record: Record = Record()
 
     if request.method == 'POST':
         form = RecordForm(request.POST, instance=record)
+
         if form.is_valid():
             record = form.save(commit=False)
             record.save()
