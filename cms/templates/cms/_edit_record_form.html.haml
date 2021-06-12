@@ -5,10 +5,10 @@
 - csrf_token
 
 -# date field
-.form-group.row{class: "{{form.comment.errors|yesno:'is-invalid,is-valid'}}"}
+.form-group.row{class: "{{form.date.errors|yesno:'is-invalid,is-valid'}}"}
   %label.col-md-3(for='id_date')= form.date.label
   %div.col-md-9
-    .input-group{class: "{{form.comment.errors|yesno:'is-invalid,is-valid'}}"}
+    .input-group{class: "{{form.date.errors|yesno:'is-invalid,is-valid'}}"}
       = form.date|add_validated_result_class|append_attr:"data-input:data-input"|add_class:"form-control datepicker"
       .input-group-append.clickable
         .pickr-icon.input-group-text
