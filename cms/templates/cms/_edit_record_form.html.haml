@@ -1,19 +1,20 @@
 - load static
 - load widget_tweaks
--# - load bootstrap4
 - load utils
 
-
 - csrf_token
-
--# TODO: remove lately
-= form
 
 -# date field
 .form-group.row{class: "{{form.comment.errors|yesno:'is-invalid,is-valid'}}"}
   %label.col-md-3(for='id_date')= form.date.label
   %div.col-md-9
-    = form.date|add_validated_result_class|add_class:"form-control datepicker"
+    .input-group{class: "{{form.comment.errors|yesno:'is-invalid,is-valid'}}"}
+      = form.date|add_validated_result_class|append_attr:"data-input:data-input"|add_class:"form-control datepicker"
+      .input-group-append.clickable
+        .pickr-icon.input-group-text
+          -# TODO: introduce any icons and set it here
+          -# %i.glyphicon.glyphicon-calendar
+          Icon
     - for error in form.date.errors
       %p.invalid-feedback= error
 
