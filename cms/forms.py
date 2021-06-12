@@ -1,5 +1,5 @@
 from django import forms
-from bootstrap_datepicker_plus import DatePickerInput, TimePickerInput  # , DateTimePickerInput
+from bootstrap_datepicker_plus import TimePickerInput  # , DatePickerInput, DateTimePickerInput
 from cms.models import Record, Activity
 
 
@@ -9,13 +9,19 @@ class RecordForm(forms.ModelForm):
         model = Record
         fields = ('date', 'comment', )
         widgets = {
-            'date': DatePickerInput(
-                format='%Y-%m-%d',
-                # options={
-                #     'locale': 'ja',
-                #     'dayViewHeaderFormat': 'YYYY年 MMMM',
-                # }
-            ),
+            # INFO: settings for 'bootstrap_datepicker_plus'
+            # 'date': forms.TextInput(
+            #     attrs={'class': 'datepicker'}
+            # ),
+
+            # INFO: settings for 'bootstrap_datepicker_plus'
+            # 'date': DatePickerInput(
+            #     format='%Y-%m-%d',
+            #     options={
+            #         'locale': 'ja',
+            #         'dayViewHeaderFormat': 'YYYY年 MMMM',
+            #     }
+            # ),
         }
 
     def clean_comment(self):

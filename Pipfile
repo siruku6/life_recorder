@@ -15,6 +15,7 @@ whitenoise = "*"
 django-hamlpy = "*"
 djangorestframework = "*"
 django-filter = "*"
+django-widget-tweaks = "*"
 
 [dev-packages]
 flake8 = "*"
