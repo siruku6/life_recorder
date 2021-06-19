@@ -3,6 +3,15 @@
 - block title
   活動記録の編集
 
+- block breadcrumbs
+  %li.breadcrumb-item
+    %a(title="Home" href="{% url 'cms:index' %}")
+      %i.fa.fa-home
+      Home
+  %li.breadcrumb-item
+    %a(title="Records" href="{% url 'cms:life_logs' %}") Records
+  %li.breadcrumb-item.active Edit
+
 - block content
   %h4.mt-4.mb-5.border-bottom 活動記録の編集
   - if record_id

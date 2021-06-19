@@ -1,5 +1,12 @@
 - extends "cms/base.html.haml"
 
+- block breadcrumbs
+  %li.breadcrumb-item
+    %a(title="Home" href="{% url 'cms:index' %}")
+      %i.fa.fa-home
+      Home
+  %li.breadcrumb-item.active Activity Types
+
 - block content
   %h4.mt-4.border-bottom Activity Types
   %a.btn.btn-primary.btn-sm.my-3{href: "{% url 'cms:new_activity_type' %}"} 追加

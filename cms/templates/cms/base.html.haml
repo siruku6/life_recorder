@@ -21,12 +21,14 @@
       %link(rel="stylesheet" type="text/css" href="{% static 'stylesheets/cms/base.css' %}")
     %title
       - block title
-        My books
 
   %body
     %div.container
+      %nav(aria-label="breadcrumb")
+        %ol.breadcrumb
+          - block breadcrumbs
       - block content
-        = content
+
 
     - block extra_js
       -# INFO: This line is commented out because jquery is already loaded via bootstrap.
