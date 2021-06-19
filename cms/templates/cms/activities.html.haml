@@ -34,7 +34,7 @@
             %td
               %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:edit_activity' record_id=record.id activity_id=activity.id %}"}
                 修正
-              %a.btn.btn-outline-danger.btn-sm.del_confirm{href: "{% url 'cms:destroy_activity' record_id=record.id activity_id=activity.id %}", 'data-toggle': "modal", 'data-target': "#deleteModal", 'data-pk': "{{ activity.id }}"}
+              %a.btn.btn-outline-danger.btn-sm.del_confirm{href: "{% url 'cms:destroy_activity' record_id=record.id activity_id=activity.id %}", 'data-toggle': "modal", 'data-target': "#deleteModal", 'data-pk': "{{activity.id}}"}
                 削除
       - else
         %tr

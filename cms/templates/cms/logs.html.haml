@@ -21,9 +21,10 @@
           %td
             %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:edit_record' record_id=record.id %}"}
               修正
-            %a.btn.btn-outline-danger.btn-sm{href: "{% url 'cms:destroy_record' record_id=record.id %}"}
+            %a.btn.btn-outline-danger.btn-sm.del_confirm{href: "{% url 'cms:destroy_record' record_id=record.id %}", 'data-toggle': "modal", 'data-target': "#deleteModal", 'data-pk': "{{record.id}}"}
               削除
             %a.btn.btn-outline-info.btn-sm{href: "{% url 'cms:activities' record_id=record.id %}"}
               活動内容一覧
 
+  - include 'partials/confirmation_modal.html.haml'
   - include 'partials/btn_back.html.haml'
