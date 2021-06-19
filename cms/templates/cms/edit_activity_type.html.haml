@@ -9,7 +9,7 @@
 
 - block content
   %h4.mt-4.mb-5.border-bottom 活動種別の編集
-  %form{action: "{% url 'cms:create_activity_type' %}", method: "post"}
+  %form{action: "{% url 'cms:create_or_update_activity_type' %}", method: "post"}
     - csrf_token
     = form.id
     .form-group.row

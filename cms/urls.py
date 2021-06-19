@@ -14,9 +14,9 @@ urlpatterns = [
     # 活動種別
     path('activity_types/', views.activity_types, name='activity_types'),
     path('activity_types/new/', views.new_activity_type, name='new_activity_type'),
-    path('activity_types/create/', views.edit_activity_type, name='create_activity_type'),
-    # path('activity_types/<int:id>/edit/', views.edit_activity_types, name='create_activity_type'),
-    # path('activity_types/<int:id>/destroy/', views.del_activity_types, name='destroy_activity_type'),
+    path('activity_types/create/', views.create_or_update_activity_type, name='create_or_update_activity_type'),
+    # path('activity_types/<int:activity_type_id>/edit/', views.edit_activity_type, name='edit_activity_type'),
+    path('activity_types/<int:activity_type_id>/destroy/', views.del_activity_type, name='destroy_activity_type'),
 
     # 活動内容
     path('records/<int:record_id>/activities/', views.Activities.as_view(), name='activities'),

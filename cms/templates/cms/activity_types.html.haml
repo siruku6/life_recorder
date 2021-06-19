@@ -9,12 +9,19 @@
         %th id
         %th name
         %th{colspan: 2} color
+        %th
     %tbody
       - for type in activity_types
         %tr
           %td= type.id
           %td= type.name
           %td= type.color
-          %td{ style: 'background-color: {{type.color}};' }
+          %td{style: 'background-color: {{type.color}};'}
+          %td.text-right
+            -# %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:edit_activity_type' activity_type_id=type.id %}"}
+            -#   修正
+            %a.btn.btn-outline-danger.btn-sm.del_confirm{href: "{% url 'cms:destroy_activity_type' activity_type_id=type.id %}", 'data-toggle': "modal", 'data-target': "#deleteModal", 'data-pk': "{{type.id}}"}
+              削除
 
+  - include 'partials/confirmation_modal.html.haml'
   - include 'partials/btn_back.html.haml'
