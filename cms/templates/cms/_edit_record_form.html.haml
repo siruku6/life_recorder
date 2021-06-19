@@ -1,0 +1,37 @@
+- load static
+- load widget_tweaks
+- load utils
+
+- csrf_token
+
+-# date field
+.form-group.row{class: "{{form.date.errors|yesno:'is-invalid,is-valid'}}"}
+  %label.col-md-3(for='id_date')= form.date.label
+  %div.col-md-9
+    .input-group{class: "{{form.date.errors|yesno:'is-invalid,is-valid'}}"}
+      = form.date|add_validated_result_class|append_attr:"data-input:data-input"|add_class:"form-control datepicker"
+      .input-group-append.clickable
+        .pickr-icon.input-group-text
+          -# TODO: introduce any icons and set it here
+          -# %i.glyphicon.glyphicon-calendar
+          Icon
+    - for error in form.date.errors
+      %p.invalid-feedback= error
+
+-# comment field
+.form-group.row{class: "{{form.comment.errors|yesno:'is-invalid,is-valid'}}"}
+  %label.col-md-3(for='id_comment')= form.comment.label
+  %div.col-md-9
+    - render_field form.comment|add_class:"form-control"|add_validated_result_class placeholder="コメント"
+    - for error in form.comment.errors
+      %p.invalid-feedback= error
+
+.form-group.row
+  .offset-md-3.col-md-9
+    %button.btn.btn-primary.btn-sm(type="submit") 送信
+
+
+- block extra_assets
+  %link(rel="stylesheet" type="text/css" href="{% static 'flatpickr/dist/flatpickr.min.css' %}")
+  %script(type="text/javascript" src="{% static 'flatpickr/dist/flatpickr.min.js' %}")
+  %script(type="text/javascript" src="{% static 'javascripts/cms/flatpickr_initializer.js' %}")

@@ -1,7 +1,18 @@
 let AutocompleteModule = {
-  candidates: $('#autocomplete-candidates > li.candidate')
-    .map(function(_i, candidate) { return candidate.innerText })
-    .get(),
+  candidates: [],
+  resetCandidates: function(filterClass) {
+    const $candidateElems = (typeof filterClass === 'undefined')
+                          ? $('#autocomplete-candidates > li.candidate')
+                          : $(`#autocomplete-candidates > li.candidate.${filterClass}`);
+
+    this.candidates = $candidateElems
+      .map(function(_i, candidate) { return candidate.innerText })
+      .get();
+  },
+  extractActivityTypeClass: function() {
+    const selectedActivityType = $('select[name="activity_type"] > option:selected').text();
+    return selectedActivityType.split(' ')[1];
+  },
   filterCandidatesBy: function(inputKeywords) {
     let candidatesArray = AutocompleteModule.candidates.slice();
     $.each(inputKeywords, function(_, keyword) {
@@ -26,6 +37,13 @@ let AutocompleteModule = {
 }
 
 $(function() {
+  AutocompleteModule.resetCandidates();
+
+  $('select[name="activity_type"]').on('change', function(_event) {
+    const activityTypeClass = AutocompleteModule.extractActivityTypeClass();
+    AutocompleteModule.resetCandidates(activityTypeClass);
+  });
+
   $('#activity-name').autocomplete({
     source:  function(requestObj, responseFunc) {
       const inputKeywords = requestObj.term.split(/\s+/);
@@ -35,7 +53,7 @@ $(function() {
     open: function(_event, _ui) {
       AutocompleteModule.highlightMatchedChars();
     },
-    focus: function (_event, _ui) {
+    focus: function(_event, _ui) {
       return false;
     },
     // delay: 500,

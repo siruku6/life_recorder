@@ -3,6 +3,17 @@
 - block title
   活動内容の編集
 
+- block breadcrumbs
+  %li.breadcrumb-item
+    %a(title="Home" href="{% url 'cms:index' %}")
+      %i.fa.fa-home
+      Home
+  %li.breadcrumb-item
+    %a(title="Records" href="{% url 'cms:life_logs' %}") Records
+  %li.breadcrumb-item
+    %a(title="Activities" href="{% url 'cms:activities' record_id=record_id %}") Activities
+  %li.breadcrumb-item.active Edit
+
 - block content
   %h4.mt-4.mb-5.border-bottom 活動内容の編集
   - if activity_id
@@ -16,4 +27,4 @@
 
   %ul#autocomplete-candidates{'hidden': True}
     - for act in template_activities
-      %li.candidate= act.name
+      %li.candidate{class: '{{ act.activity_type.name }}'}= act.name

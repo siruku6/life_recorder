@@ -49,7 +49,7 @@ class ActivityTypeModelTests(TestCase):
 
 
 class RecordModelTests(TestCase):
-    def test_duplicated_activity_type(self):
+    def test_duplicated_date(self):
         """
         [Example] attribute 'date' is duplicated
         """

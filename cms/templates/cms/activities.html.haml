@@ -3,6 +3,15 @@
 - block title
   活動一覧
 
+- block breadcrumbs
+  %li.breadcrumb-item
+    %a(title="Home" href="{% url 'cms:index' %}")
+      %i.fa.fa-home
+      Home
+  %li.breadcrumb-item
+    %a(title="Records" href="{% url 'cms:life_logs' %}") Records
+  %li.breadcrumb-item.active Activities
+
 - block content
   %h4.mt-4.border-bottom
     活動一覧
@@ -34,7 +43,7 @@
             %td
               %a.btn.btn-outline-primary.btn-sm{href: "{% url 'cms:edit_activity' record_id=record.id activity_id=activity.id %}"}
                 修正
-              %a.btn.btn-outline-danger.btn-sm.del_confirm{href: "{% url 'cms:destroy_activity' record_id=record.id activity_id=activity.id %}", 'data-toggle': "modal", 'data-target': "#deleteModal", 'data-pk': "{{ activity.id }}"}
+              %a.btn.btn-outline-danger.btn-sm.del_confirm{href: "{% url 'cms:destroy_activity' record_id=record.id activity_id=activity.id %}", 'data-toggle': "modal", 'data-target': "#deleteModal", 'data-pk': "{{activity.id}}"}
                 削除
       - else
         %tr
