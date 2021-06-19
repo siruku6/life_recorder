@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from cms.models import Record, TemplateActivity
-from cms.views import create_template_activity
+from cms.views.activities_view import create_template_activity
 from tests.factories import *
 
 
