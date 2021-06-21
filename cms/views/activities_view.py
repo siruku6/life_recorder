@@ -18,7 +18,7 @@ class Activities(ListView):
 
     def get(self, request, *args, **kwargs):
         record = get_object_or_404(Record, pk=kwargs['record_id'])
-        activities = record.activities.all().order_by('id')
+        activities = record.activities.select_related('activity_type').all().order_by('id')
         self.object_list = activities
 
         context = self.get_context_data(
