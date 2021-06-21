@@ -1,17 +1,13 @@
 - extends "cms/base.html.haml"
+- load breadcrumbs
 
 - block title
   活動内容の編集
 
 - block breadcrumbs
-  %li.breadcrumb-item
-    %a(title="Home" href="{% url 'cms:index' %}")
-      %i.fa.fa-home
-      Home
-  %li.breadcrumb-item
-    %a(title="Records" href="{% url 'cms:life_logs' %}") Records
-  %li.breadcrumb-item
-    %a(title="Activities" href="{% url 'cms:activities' record_id=record_id %}") Activities
+  - breadcrumb 'Home' 'cms:index'
+  - breadcrumb 'Records' 'cms:life_logs'
+  - breadcrumb 'Activities' 'cms:activities' record_id=1
   %li.breadcrumb-item.active Edit
 
 - block content

@@ -1,15 +1,12 @@
 - extends "cms/base.html.haml"
+- load breadcrumbs
 
 - block title
   活動種別の編集
 
 - block breadcrumbs
-  %li.breadcrumb-item
-    %a(title="Home" href="{% url 'cms:index' %}")
-      %i.fa.fa-home
-      Home
-  %li.breadcrumb-item
-    %a(title="Activity Types" href="{% url 'cms:activity_types' %}") Activity Types
+  - breadcrumb 'Home' 'cms:index'
+  - breadcrumb 'Activity Types' 'cms:activity_types'
   %li.breadcrumb-item.active Edit
 
 -# - if error_message

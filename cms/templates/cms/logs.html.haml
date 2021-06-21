@@ -1,12 +1,11 @@
 - extends "cms/base.html.haml"
+- load breadcrumbs
+
 - block title
   記録一覧
 
 - block breadcrumbs
-  %li.breadcrumb-item
-    %a(title="Home" href="{% url 'cms:index' %}")
-      %i.fa.fa-home
-      Home
+  - breadcrumb 'Home' 'cms:index'
   %li.breadcrumb-item.active Records
 
 - block content
