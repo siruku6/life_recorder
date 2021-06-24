@@ -1,5 +1,4 @@
 from django import forms
-from bootstrap_datepicker_plus import TimePickerInput  # , DatePickerInput, DateTimePickerInput
 from cms.models import Record, Activity
 
 
@@ -8,21 +7,7 @@ class RecordForm(forms.ModelForm):
     class Meta:
         model = Record
         fields = ('date', 'comment', )
-        widgets = {
-            # INFO: settings for 'bootstrap_datepicker_plus'
-            # 'date': forms.TextInput(
-            #     attrs={'class': 'datepicker'}
-            # ),
-
-            # INFO: settings for 'bootstrap_datepicker_plus'
-            # 'date': DatePickerInput(
-            #     format='%Y-%m-%d',
-            #     options={
-            #         'locale': 'ja',
-            #         'dayViewHeaderFormat': 'YYYY年 MMMM',
-            #     }
-            # ),
-        }
+        widgets = {}
 
     def clean_comment(self):
         comment: str = self.cleaned_data['comment']
@@ -77,18 +62,6 @@ class ActivityForm(forms.ModelForm):
                 attrs={
                     'id': 'activity-name',
                     'autocomplete': 'off'
-                }
-            ),
-            'start': TimePickerInput(
-                options={
-                    "format": 'HH:mm',
-                    "stepping": 15,
-                }
-            ),
-            'end': TimePickerInput(
-                options={
-                    "format": 'HH:mm',
-                    "stepping": 15,
                 }
             ),
             'spent_time': forms.HiddenInput(),

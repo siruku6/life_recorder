@@ -9,9 +9,9 @@
   %label.col-md-3(for='id_date')= form.date.label
   %div.col-md-9
     .input-group{class: "{{form.date.errors|yesno:'is-invalid,is-valid'}}"}
-      = form.date|add_validated_result_class|append_attr:"data-input:data-input"|add_class:"form-control datepicker"
+      = form.date|add_validated_result_class|append_attr:"data-input:data-input"|add_class:"form-control datepickr"
       .input-group-append.clickable
-        .pickr-icon.input-group-text
+        .datepickr-icon.input-group-text
           -# TODO: introduce any icons and set it here
           -# %i.glyphicon.glyphicon-calendar
           Icon
@@ -32,6 +32,4 @@
 
 
 - block extra_assets
-  %link(rel="stylesheet" type="text/css" href="{% static 'flatpickr/dist/flatpickr.min.css' %}")
-  %script(type="text/javascript" src="{% static 'flatpickr/dist/flatpickr.min.js' %}")
-  %script(type="text/javascript" src="{% static 'javascripts/cms/flatpickr_initializer.js' %}")
+  - include 'cms/templates/_flat_pickr_loader.html.haml'
