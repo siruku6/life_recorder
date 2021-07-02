@@ -9,10 +9,12 @@ RUN apk add --no-cache libstdc++ libgcc \
     gcc musl-dev \
     # For psycopg2 (postgresql client)
     postgresql-dev \
+    # For social-auth-app-django (for Cryptography)
+    musl-dev python3-dev libffi-dev openssl-dev cargo \
     # For development and debug
-    bash vim
+    bash vim \
     # for updating python module
-    # && pip install --upgrade pip
+    && pip install --upgrade pip
 
 EXPOSE 8000
 

@@ -15,6 +15,7 @@ django-hamlpy = "*"
 djangorestframework = "*"
 django-filter = "*"
 django-widget-tweaks = "*"
+social-auth-app-django = "*"
 
 [dev-packages]
 flake8 = "*"
