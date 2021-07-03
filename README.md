@@ -88,5 +88,5 @@ Before `commit` or `push`, please run following checks, and confirm all of them 
 
 1. unittest  
     ```bash
-    $ docker-compose exec python manage.py test --debug-mode
+    $ docker-compose exec web python manage.py test --debug-mode
     ```
