@@ -16,10 +16,16 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
+# from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('api/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    # path('logout/', auth_views.LogoutView,
+    #      {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('social_django.urls', namespace='social')),
 
     path('cms/', include('cms.urls')),
     path('admin/', admin.site.urls),
