@@ -27,6 +27,11 @@ You need to setup these and to enable `docker-compose` to run.
 
 <details><summary>Click here to open! :D</summary><div>
 
+1. Create OAuth 2.0 client  
+    If it is necessary, please create Google client-id following this article.
+    ([Google Cloud / Creating client IDs](https://cloud.google.com/endpoints/docs/frameworks/java/creating-client-ids?hl=ja#web-client))
+
+
 1. Copy `.env`
     ```bash
     $ cp .env.example .env
@@ -37,6 +42,9 @@ You need to setup these and to enable `docker-compose` to run.
     |2 |SECRET_KEY |xxxxxx...    |It is for Django                       |
     |3 |DB_USER    |user         |It is username of your postgresql      |
     |4 |DB_PASSWORD|password     |It is password of your postgresql      |
+    |- |-          |-            |The below variables are optional<br>(not required)|
+    |5 |SOCIAL_AUTH_GOOGLE_OAUTH2_KEY   |000000000000-....apps.googleusercontent.com|OAuth 2.0 client ID for Google|
+    |6 |SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET|xxxxxx...|OAuth 2.0 client secret for Google|
 
 1. Execute following commands
     ```bash

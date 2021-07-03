@@ -22,6 +22,17 @@
 
   %body
     %div.container
+      %div.text-right
+        - if user.is_authenticated
+          Hello,
+          = user.username
+          !
+          %a.btn.btn-outline-secondary{href: "{% url 'logout' %}"}
+            logout
+        - else
+          %a.btn.btn-outline-secondary{href: "{% url 'social:begin' 'google-oauth2' %}"}
+            %img{src: "{% static 'images/icon_google_logo.svg' %}", width: '26', height: '26'}
+            Sign up with your Google account
       %nav(aria-label="breadcrumb")
         %ol.breadcrumb
           - block breadcrumbs
