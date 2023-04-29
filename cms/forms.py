@@ -67,6 +67,12 @@ class ActivityForm(forms.ModelForm):
             'spent_time': forms.HiddenInput(),
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data['start'] > cleaned_data['end']:
+            raise forms.ValidationError('Start time can not be greater than end time')
+        return cleaned_data
+
     # INFO: 日付系のsample
     # purchased_date = forms.DateTimeField(
     #     label='購入日',
