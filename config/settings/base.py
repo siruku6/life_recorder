@@ -45,7 +45,6 @@ ALLOWED_HOSTS = ['*']
 ###########################################
 INSTALLED_APPS = [
     'bootstrap4',
-    'bootstrap_datepicker_plus',
     # 'hamlpy', # なくても動く
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'rest_framework',
     'widget_tweaks',
 
@@ -100,6 +100,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
             'loaders': TEMPLATES_LOADERS,
         },
@@ -108,6 +110,25 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+
+###########################################
+#     Authentication (login / logout)
+###########################################
+AUTHENTICATION_BACKENDS = (
+    # 'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
+    # 'social_core.backends.google.GoogleOpenId',  # for Google authentication
+    'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+    # 'social_core.backends.github.GithubOAuth2',  # for Github authentication
+    # 'social_core.backends.facebook.FacebookOAuth2',  # for Facebook authentication
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+# LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'cms:index'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'cms:index'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 
 ###########################

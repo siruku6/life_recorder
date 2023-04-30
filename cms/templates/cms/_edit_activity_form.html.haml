@@ -1,0 +1,55 @@
+- load static
+- load widget_tweaks
+- load utils
+
+- csrf_token
+
+-# activity_type
+.form-group.row
+  %label.col-md-3(for='id_activity_type')= form.activity_type.label
+  %div.col-md-9
+    - render_field form.activity_type|add_class:"form-control"|add_validated_result_class
+    - for error in form.activity_type.errors
+      %p.invalid-feedback= error
+
+-# name
+.form-group.row
+  %label.col-md-3(for='id_name')= form.name.label
+  %div.col-md-9
+    - render_field form.name|add_class:"form-control"|add_validated_result_class placeholder="Name"
+    - for error in form.name.errors
+      %p.invalid-feedback= error
+
+-# start
+.form-group.row
+  %label.col-md-3(for='id_start')= form.start.label
+  %div.col-md-9
+    .input-group{class: "{{form.start.errors|yesno:'is-invalid,is-valid'}}"}
+      = form.start|add_validated_result_class|append_attr:"data-input:data-input"|add_class:"form-control timepickr"
+      .input-group-append.clickable
+        .timepickr-icon.input-group-text
+          -# TODO: introduce any icons and set it here
+          -# %i.glyphicon.glyphicon-calendar
+          Icon
+    - for error in form.start.errors
+      %p.invalid-feedback= error
+
+-# end
+.form-group.row
+  %label.col-md-3(for='id_end')= form.end.label
+  %div.col-md-9
+    .input-group{class: "{{form.end.errors|yesno:'is-invalid,is-valid'}}"}
+      = form.end|add_validated_result_class|append_attr:"data-input:data-input"|add_class:"form-control timepickr"
+      .input-group-append.clickable
+        .timepickr-icon.input-group-text
+          Icon
+    - for error in form.end.errors
+      %p.invalid-feedback= error
+
+.form-group.row
+  .offset-md-3.col-md-9
+    %button.btn.btn-primary.btn-sm(type="submit") 送信
+
+
+- block extra_assets
+  - include 'partials/_flatpickr_loader.html.haml'

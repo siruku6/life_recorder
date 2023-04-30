@@ -1,0 +1,5 @@
+%li.breadcrumb-item
+  - if link is not None
+    %a(title="{{ title }}" href="{{ link }}")= title
+  - else
+    = title
