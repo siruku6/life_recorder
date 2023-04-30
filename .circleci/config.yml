@@ -3,7 +3,7 @@ version: 2.1
 executors:
   test_executor:
     docker:
-      - image: circleci/python:3.8.6
+      - image: cimg/python:3.8.6
         environment:
           DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
           DB_USER: root
@@ -63,7 +63,7 @@ jobs:
       - restore_pipenv
       - run:
           command: |
-            sudo pip install pipenv
+            pip install pipenv
             pipenv install --dev
       - save_pipenv_cache
       - persist_to_workspace:
@@ -85,40 +85,40 @@ jobs:
           at: .
       - pytest
 
-  deploy-heroku:
-    machine:
-      image: circleci/classic:edge
-    environment:
-      # HEROKU_API_KEY: You have to set this on CircleCI web console Project Settings.
-      HEROKU_APP: "siruku6-life-recorder"
-    steps:
-      - checkout
-      - run:
-          name: heroku maintenance on
-          command: heroku maintenance:on --app $HEROKU_APP
-      - run:
-          name: heroku deploy
-          # INFO git push remote_url current_branch:main
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git $CIRCLE_BRANCH:main \
-            && heroku run python manage.py migrate cms --app $HEROKU_APP
-      - run:
-          name: heroku maintenance off
-          command: heroku maintenance:off --app $HEROKU_APP
+  # deploy-heroku:
+  #   machine:
+  #     image: cimg/classic:edge
+  #   environment:
+  #     # HEROKU_API_KEY: You have to set this on CircleCI web console Project Settings.
+  #     HEROKU_APP: "siruku6-life-recorder"
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: heroku maintenance on
+  #         command: heroku maintenance:on --app $HEROKU_APP
+  #     - run:
+  #         name: heroku deploy
+  #         # INFO git push remote_url current_branch:main
+  #         command: |
+  #           git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git $CIRCLE_BRANCH:main \
+  #           && heroku run python manage.py migrate cms --app $HEROKU_APP
+  #     - run:
+  #         name: heroku maintenance off
+  #         command: heroku maintenance:off --app $HEROKU_APP
 
-  deploy-heroku-staging:
-    machine:
-      image: circleci/classic:edge
-    environment:
-      # HEROKU_API_KEY: You have to set this on CircleCI web console Project Settings.
-      HEROKU_APP: "young-plateau-95242"
-    steps:
-      - checkout
-      - run:
-          name: heroku deploy
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git $CIRCLE_BRANCH:main \
-            && heroku run python manage.py migrate cms --app $HEROKU_APP
+  # deploy-heroku-staging:
+  #   machine:
+  #     image: cimg/classic:edge
+  #   environment:
+  #     # HEROKU_API_KEY: You have to set this on CircleCI web console Project Settings.
+  #     HEROKU_APP: "young-plateau-95242"
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: heroku deploy
+  #         command: |
+  #           git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git $CIRCLE_BRANCH:main \
+  #           && heroku run python manage.py migrate cms --app $HEROKU_APP
 
 workflows:
   version: 2
@@ -131,15 +131,15 @@ workflows:
       - pytest:
           requires:
             - build
-      - deploy-heroku:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
-      - deploy-heroku-staging:
-          requires:
-            - build
-          filters:
-            branches:
-              only: develop
+      # - deploy-heroku:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy-heroku-staging:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: develop
